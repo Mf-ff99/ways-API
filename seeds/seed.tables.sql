@@ -6,18 +6,18 @@ TRUNCATE
   ways_users;
 
 INSERT INTO ways_users 
-(user_name, password) 
+(id, user_name, password) 
 VALUES 
-('John Rambo', 'password'),
-('Tony Starks', 'password'),
-('Natasha Romanova', 'password');
+(1, 'John Rambo', 'password'),
+(2, 'Tony Starks', 'password'),
+(3, 'Natasha Romanova', 'password');
 
 INSERT INTO trips
-(user_id, trip_title, rating, destination, days) 
+(id, user_id, trip_title, rating, destination, days) 
 VALUES 
-(1, 'Disneyworld', 5, 'Orlando, FL', 1),
-(2, 'New York, baby!', 2, 'New York, NY', 2),
-(3, 'Las Vegas', 4, 'Las Vegas, NV', 3);
+(1, 1, 'Disneyworld', 5, 'Orlando, FL', 1),
+(2, 2, 'New York, baby!', 2, 'New York, NY', 2),
+(3, 3, 'Las Vegas', 4, 'Las Vegas, NV', 3);
 
 INSERT INTO stops 
 (trip_id, longitude, latitude, city, state, stop_name, description, category) 

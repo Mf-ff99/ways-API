@@ -13,11 +13,11 @@ VALUES
 ('Natasha Romanova', 'password');
 
 INSERT INTO trips
-(user_id, trip_title, rating, destination) 
+(user_id, trip_title, rating, destination, days) 
 VALUES 
-(1, 'Disneyworld', 5, 'Orlando, FL'),
-(2, 'New York, baby!', 2, 'New York, NY'),
-(3, 'Las Vegas', 4, 'Las Vegas, NV');
+(1, 'Disneyworld', 5, 'Orlando, FL', 1),
+(2, 'New York, baby!', 2, 'New York, NY', 2),
+(3, 'Las Vegas', 4, 'Las Vegas, NV', 3);
 
 INSERT INTO stops 
 (trip_id, longitude, latitude, city, state, stop_name, description, category) 

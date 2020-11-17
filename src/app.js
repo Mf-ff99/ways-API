@@ -5,7 +5,7 @@ const helmet = require('helmet');
 const { NODE_ENV } = require('./config');
 const authRouter = require('./auth/auth-router');
 const tripsRouter = require('./trip/trip-router');
-
+const userRouter = require('./user/user-router');
 const app = express();
 
 const morganOption = NODE_ENV === 'production' ? 'tiny' : 'common';
@@ -16,6 +16,7 @@ app.use(cors());
 app.use(express.json())
 
 app.use('/api/auth', authRouter);
+app.use('/api/auth/register', userRouter)
 app.use('/api/trips', tripsRouter);
 
 

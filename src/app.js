@@ -15,8 +15,8 @@ app.use(helmet());
 app.use(cors());
 app.use(express.json())
 
-app.use('/auth', authRouter);
-app.use('/trips', tripsRouter);
+app.use('/api/auth', authRouter);
+app.use('/api/trips', tripsRouter);
 
 
 app.use(function errorHandler(error, req, res, next) {

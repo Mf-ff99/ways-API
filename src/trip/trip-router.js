@@ -4,8 +4,6 @@ const TripService = require('./trip-service')
 
 const tripsRouter = express.Router();
 
-
-
 tripsRouter
   .route('/')
   .get((req, res, next) => {

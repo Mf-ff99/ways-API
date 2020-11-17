@@ -1,7 +1,10 @@
 const express = require('express');
 const bcrypt = require('bcryptjs');
 const AuthService = require('./auth-service');
+
+
 const authRouter = express.Router();
+
 
 authRouter
   .route('/register')
@@ -38,15 +41,15 @@ authRouter
   });
 
 authRouter.post('/login', (req, res, next) => {
-  const { user_name, password } = req.body;
-  const loginUser = { user_name, password };
+  const { user_na, password } = req.body;
+  const loginUser = { user_email, password };
 
   for (const [key, value] of Object.entries(loginUser))
     if (!value)
       return res.status(400).json({
         error: `Missing '${key}' in request`,
       });
-  AuthService.getUsername(req.app.get('db'), loginUser.user_name)
+  AuthService.getUserEmail(req.app.get('db'), loginUser.user_email)
     .then((dbUser) => {
       if (!dbUser)
         return res.status(400).json({
@@ -61,7 +64,7 @@ authRouter.post('/login', (req, res, next) => {
             error: 'Invalid Credentials',
           });
 
-        const sub = dbUser.user_name;
+        const sub = dbUser.user_email;
         const payload = {
           user_id: dbUser.user_id,
           user_name: dbUser.user_name,

@@ -11,7 +11,8 @@ CREATE TABLE trips (
     date_added TIMESTAMPTZ NOT NULL DEFAULT now(),
     trip_title TEXT NOT NULL,
     rating INTEGER,
-    destination TEXT
+    destination TEXT,
+    days int
 );
 
 CREATE TABLE stops (

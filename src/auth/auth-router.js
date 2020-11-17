@@ -41,7 +41,7 @@ authRouter
   });
 
 authRouter.post('/login', (req, res, next) => {
-  const { user_na, password } = req.body;
+  const { user_name, password } = req.body;
   const loginUser = { user_email, password };
 
   for (const [key, value] of Object.entries(loginUser))

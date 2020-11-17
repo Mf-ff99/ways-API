@@ -2,7 +2,7 @@ const bcrypt = require('bcryptjs');
 const e = require('express');
 const jwt = require('jsonwebtoken');
 
-const { JWT_SECRET } = require('../../config');
+const { JWT_SECRET } = require('../config');
 
 const AuthService = {
   registerUser(db, newUser) {
@@ -14,7 +14,7 @@ const AuthService = {
       });
   },
   getUsername(db, user_name) {
-    return db('users').where({ user_name }).first();
+    return db('ways_users').where({ user_name }).first();
   },
   comparePasswords(password, hash) {
     return bcrypt.compare(password, hash);

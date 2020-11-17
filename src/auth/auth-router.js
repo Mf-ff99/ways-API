@@ -1,17 +1,13 @@
 const express = require('express');
 const bcrypt = require('bcryptjs');
 const AuthService = require('./auth-service');
-
-
 const authRouter = express.Router();
-
 
 authRouter
   .route('/register')
   .post((req, res, next) => {
     let { password, user_name } = req.body;
     let newUser = {  password, user_name };
-
     if (!password || !user_name) {
       return res
         .status(400)
@@ -21,7 +17,7 @@ authRouter
         error: 'Password must be atleast 8 characters',
       });
     } else {
-      newUser.password = bcrypt.hashSync(password);
+        newUser.password = bcrypt.hashSync(password);
         AuthService.getUsername(req.app.get('db'), user_name).then((result) => {
           if (result) {
             return res.status(400).json({ error: 'Username Already Exists' });
@@ -38,20 +34,19 @@ authRouter
             })
             .catch(next);
         });
-     
     }
   });
 
-authRouter.post('/login', req, res, next) => {
-  const { user_email, password } = req.body;
-  const loginUser = { user_email, password };
+authRouter.post('/login', (req, res, next) => {
+  const { user_name, password } = req.body;
+  const loginUser = { user_name, password };
 
   for (const [key, value] of Object.entries(loginUser))
     if (!value)
       return res.status(400).json({
         error: `Missing '${key}' in request`,
       });
-  AuthService.getUserEmail(req.app.get('db'), loginUser.user_email)
+  AuthService.getUsername(req.app.get('db'), loginUser.user_name)
     .then((dbUser) => {
       if (!dbUser)
         return res.status(400).json({
@@ -66,7 +61,7 @@ authRouter.post('/login', req, res, next) => {
             error: 'Invalid Credentials',
           });
 
-        const sub = dbUser.user_email;
+        const sub = dbUser.user_name;
         const payload = {
           user_id: dbUser.user_id,
           user_name: dbUser.user_name,

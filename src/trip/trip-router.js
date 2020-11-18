@@ -1,12 +1,13 @@
 const express = require("express");
 const bcrypt = require("bcryptjs");
 const TripService = require("./trip-service");
+const { requireAuth } = require("../middleware/jwt-auth");
 
 const tripsRouter = express.Router();
 
 tripsRouter
   .route("/")
-  .get((req, res, next) => {
+  .get(requireAuth, (req, res, next) => {
     const db = req.app.get("db");
     TripService.getTrips(db)
       .then((trips) => {
@@ -14,31 +15,30 @@ tripsRouter
       })
       .catch(next);
   })
-  .post((req, res, next) => {
+  .post(requireAuth, (req, res, next) => {
     const db = req.app.get("db");
-    const {} = req.body;
+    const { short_description, destination, days, activities } = req.body;
 
-    const newTrip = {};
+    const newTrip = { short_description, destination, days, activities };
 
-    for (const [key, value] of Object.entries(newTrip))
-      if (value == null)
-        return res.status(400).json({
-          error: `Missing '${key}' in request body`,
-        });
-
-    newTrip.user_id = req.user.user_id;
-
+    newTrip.user_id = req.user.id;
+    console.log(req.user.id);
     TripService.insertTrip(db, newTrip)
       .then((trip) => {
-        res.status(201).json(TripServce.serializeTrip(trip));
+        res.status(201).json(TripService.serializeTrip(trip));
       })
       .catch(next);
   });
 
 tripsRouter.route("/stops/:trip_id").get((req, res, next) => {
   const db = req.app.get("db");
+<<<<<<< HEAD
   const id = req.params.trip_id
   console.log(id)
+=======
+  // get id of trip from request body
+  const id = req.body.trip_id;
+>>>>>>> origin/wed-server-branch
   TripService.getStopsById(db, id)
     .then((stops) => {
       return res.json(stops);

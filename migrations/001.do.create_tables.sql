@@ -9,7 +9,7 @@ CREATE TABLE trips (
     user_id INTEGER REFERENCES ways_users(id) ON DELETE CASCADE NOT NULL,
     id SERIAL PRIMARY KEY,
     date_added TIMESTAMPTZ NOT NULL DEFAULT now(),
-    trip_title TEXT NOT NULL,
+    short_description TEXT NOT NULL,
     rating INTEGER,
     destination TEXT,
     activities TEXT,

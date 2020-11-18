@@ -5,6 +5,7 @@
 //  getTripsByUserId?
 //  getTripsWithStops?
 //  getStopsByTripId?
+const xss = require("xss");
 
 const TripService = {
   getTrips(db) {
@@ -28,15 +29,15 @@ const TripService = {
       });
   },
   getStopsById(db, id) {
-    return db.where("stop.id", id);
+    return db("stops").where("trip_id", id);
   },
 
   serializeTrip(trip) {
     return {
       id: trip.id,
-      trip_title: trip.title,
+      short_description: xss(trip.title),
       rating: trip.rating,
-      destination: trip.destination,
+      destination: xss(trip.destination),
       days: trip.days,
       user_id: trip.user_id,
     };

@@ -32,13 +32,9 @@ tripsRouter
 
 tripsRouter.route("/stops/:trip_id").get((req, res, next) => {
   const db = req.app.get("db");
-<<<<<<< HEAD
-  const id = req.params.trip_id
-  console.log(id)
-=======
   // get id of trip from request body
-  const id = req.body.trip_id;
->>>>>>> origin/wed-server-branch
+  const id = req.params.trip_id;
+  console.log(id)
   TripService.getStopsById(db, id)
     .then((stops) => {
       return res.json(stops);

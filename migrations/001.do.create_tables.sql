@@ -12,6 +12,7 @@ CREATE TABLE trips (
     trip_title TEXT NOT NULL,
     rating INTEGER,
     destination TEXT,
+    activities TEXT,
     days int
 );
 

@@ -33,8 +33,9 @@ tripsRouter
 tripsRouter.route("/stops/:trip_id").get((req, res, next) => {
   const db = req.app.get("db");
   // get id of trip from request body
-  const id = req.params.trip_id;
-  console.log(id)
+
+  const id = req.body.trip_id;
+
   TripService.getStopsById(db, id)
     .then((stops) => {
       return res.json(stops);

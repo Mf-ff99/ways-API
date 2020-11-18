@@ -13,6 +13,7 @@ VALUES
 (3, 'Natasha Romanova', 'password');
 
 INSERT INTO trips
+<<<<<<< HEAD
 (id, user_id, short_description, rating, destination, days, activities) 
 VALUES 
 (1, 1, 'Disneyworld Trip', 5, 'Orlando, FL', 1, 'DisneyLand, Wax-Museum'),
@@ -20,6 +21,15 @@ VALUES
 (3, 3, 'Las Vegas Night Life', 4, 'Las Vegas, NV', 3, 'Casinos, Sight-Seeing'),
 (4, 3, 'Windy City Heat', 2, 'Chicago, IL', 2, 'Shopping, Sight-Seeing'),
 (5, 2, 'Maple Leaf State', 2, 'Toronto', 2, 'Shopping, Sight-Seeing');
+=======
+(id, user_id, short_description, rating, destination, days, activities, img) 
+VALUES 
+(1, 1, 'Disneyworld Trip', 5, 'Orlando, FL', 1, 'DisneyLand, Wax-Museum', 'amusementpark'),
+(2, 2, 'New York, baby!', 2, 'New York, NY', 2, 'Shopping, Sight-Seeing', 'city'),
+(3, 3, 'Las Vegas Night Life', 4, 'Las Vegas, NV', 3, 'Casinos, Sight-Seeing', 'nightlife'),
+(4, 3, 'Windy City Heat', 2, 'Chicago, IL', 2, 'Shopping, Sight-Seeing', 'countryside'),
+(5, 2, 'Maple Leaf State', 2, 'Toronto', 2, 'Shopping, Sight-Seeing', 'mountain');
+>>>>>>> wed-server-branch
 
 
 INSERT INTO stops 

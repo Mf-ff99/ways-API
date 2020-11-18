@@ -7,8 +7,6 @@
 //  getStopsByTripId?
 const xss = require("xss");
 
-// POST new trip, and new stops
-
 const TripService = {
   getTrips(db) {
     return db("trips")

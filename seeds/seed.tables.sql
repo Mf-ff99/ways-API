@@ -17,7 +17,9 @@ INSERT INTO trips
 VALUES 
 (1, 1, 'Disneyworld', 5, 'Orlando, FL', 1, 'DisneyLand, Wax-Museum'),
 (2, 2, 'New York, baby!', 2, 'New York, NY', 2, 'Shopping, Sight-Seeing'),
-(3, 3, 'Las Vegas', 4, 'Las Vegas, NV', 3, 'Casinos, Sight-Seeing');
+(3, 3, 'Las Vegas', 4, 'Las Vegas, NV', 3, 'Casinos, Sight-Seeing'),
+(4, 3, 'Las Vegas', 4, 'Las Vegas, NV', 3, 'Casinos, Sight-Seeing'),
+(5, 3, 'Las Vegas', 4, 'Las Vegas, NV', 3, 'Casinos, Sight-Seeing');
 
 INSERT INTO stops 
 (trip_id, longitude, latitude, city, state, stop_name, description, category) 

@@ -35,9 +35,11 @@ tripsRouter
       .catch(next);
   });
 
-tripsRouter.route("/stops").get((req, res, next) => {
+tripsRouter.route("/stops/:trip_id").get((req, res, next) => {
   const db = req.app.get("db");
-  TripService.getStops(db)
+  const id = req.params.trip_id
+  console.log(id)
+  TripService.getStopsById(db, id)
     .then((stops) => {
       return res.json(stops);
     })

@@ -7,7 +7,7 @@ const tripsRouter = express.Router();
 
 tripsRouter
   .route("/")
-  .get(requireAuth, (req, res, next) => {
+  .get((req, res, next) => {
     const db = req.app.get("db");
     TripService.getTrips(db)
       .then((trips) => {

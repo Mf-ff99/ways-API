@@ -13,6 +13,7 @@ CREATE TABLE trips (
     rating INTEGER,
     destination TEXT,
     activities TEXT,
+    img text,
     days int
 );
 

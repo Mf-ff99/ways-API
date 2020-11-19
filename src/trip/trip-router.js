@@ -32,7 +32,7 @@ tripsRouter
 
 tripsRouter.route("/stops/:trip_id").get((req, res, next) => {
   const db = req.app.get("db");
-  // get id of trip from request body
+  // get id of trip from params
 
   const id = req.params.trip_id;
 
@@ -42,5 +42,18 @@ tripsRouter.route("/stops/:trip_id").get((req, res, next) => {
     })
     .catch(next);
 });
+
+tripsRouter.route("/stops").post(requireAuth, (req, res, next) => {
+  const db = req.app.get("db");
+  const { trip_id, longitude, latitude, city, state, stop_name, description, category } = req.body;
+
+  const newStop = { trip_id, longitude, latitude, city, state, stop_name, description, category }
+  
+  TripService.insertStop(db, newStop)
+    .then((newStop) => {
+      res.status(201).json(TripService.serializeStop(newStop))
+    })
+    .catch(next)
+})
 
 module.exports = tripsRouter;

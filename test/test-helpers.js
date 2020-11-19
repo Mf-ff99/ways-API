@@ -7,7 +7,6 @@ const jwt = require('jsonwebtoken')
 
 //create a knex instance to postgres
 function makeKnexInstance() {
-    console.log( process.env.TEST_DATABASE_URL)
     return knex({
         client: 'pg',
         connection: process.env.TEST_DATABASE_URL,

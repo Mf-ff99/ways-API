@@ -30,6 +30,7 @@ tripsRouter
     newTrip.user_id = req.user.id;
     const xssTrip = TripService.serializeTrip(newTrip)
     console.log(req.user.id);
+    console.log(xssTrip)
     TripService.insertTrip(db, xssTrip)
       .then((trip) => {
         console.log(trip)

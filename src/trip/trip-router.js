@@ -7,7 +7,7 @@ const tripsRouter = express.Router();
 
 tripsRouter
   .route("/")
-  .get(requireAuth, (req, res, next) => {
+  .get((req, res, next) => {
     const db = req.app.get("db");
     TripService.getTrips(db)
       .then((trips) => {
@@ -17,9 +17,21 @@ tripsRouter
   })
   .post(requireAuth, (req, res, next) => {
     const db = req.app.get("db");
-    const { short_description, destination, days, activities } = req.body;
+    const {
+      short_description,
+      destination,
+      days,
+      activities,
+      rating,
+    } = req.body;
 
-    const newTrip = { short_description, destination, days, activities };
+    const newTrip = {
+      short_description,
+      destination,
+      days,
+      activities,
+      rating,
+    };
 
     newTrip.user_id = req.user.id;
     // console.log(req.user.id);
@@ -30,15 +42,31 @@ tripsRouter
       .catch(next);
   });
 
-tripsRouter.route("/stops").get((req, res, next) => {
+tripsRouter.route("/stops/:trip_id").get((req, res, next) => {
   const db = req.app.get("db");
-  // get id of trip from request body
-  const id = req.body.trip_id;
+  // get id of trip from params
+
+  const id = req.params.trip_id;
+
   TripService.getStopsById(db, id)
     .then((stops) => {
       return res.json(stops);
     })
     .catch(next);
+});
+
+tripsRouter.route("/stops").post(requireAuth, (req, res, next) => {
+  const db = req.app.get("db");
+  const { trip_id, longitude, latitude, city, state, stop_name, description, category } = req.body;
+
+  const newStop = { trip_id, longitude, latitude, city, state, stop_name, description, category }
+  const xssStop = TripService.serializeStop(newStop)
+  // console.log(xssStop)
+  TripService.insertStop(db, newStop)
+    .then((newStop) => {
+      res.status(201).json(xssStop)
+    })
+    .catch(next)
 });
 
 module.exports = tripsRouter;

@@ -28,10 +28,11 @@ tripsRouter
     };
 
     newTrip.user_id = req.user.id;
+    const xssTrip = TripService.serializeTrip(trip)
     console.log(req.user.id);
     TripService.insertTrip(db, newTrip)
       .then((trip) => {
-        res.status(201).json(TripService.serializeTrip(trip));
+        res.status(201).json(xssTrip);
       })
       .catch(next);
   });

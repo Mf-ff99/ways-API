@@ -39,11 +39,13 @@ const TripService = {
   serializeTrip(trip) {
     return {
       id: trip.id,
-      short_description: xss(trip.title),
+      short_description: xss(trip.short_description),
       rating: trip.rating,
       destination: xss(trip.destination),
       days: trip.days,
+      activities: trip.activities,
       user_id: trip.user_id,
+      img: trip.img,
     };
   },
 

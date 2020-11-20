@@ -28,15 +28,12 @@ tripsRouter
     };
 
     newTrip.user_id = req.user.id;
-<<<<<<< HEAD
-    const xssTrip = TripService.serializeTrip(trip);
-=======
     const xssTrip = TripService.serializeTrip(newTrip)
->>>>>>> 355992360101a42f3534f287639b699778fe7eee
     console.log(req.user.id);
     TripService.insertTrip(db, xssTrip)
       .then((trip) => {
-        res.status(201).json(trip);
+        console.log(trip)
+        res.status(201).json(xssTrip);
       })
       .catch(next);
   });
@@ -79,15 +76,9 @@ tripsRouter.route("/stops").post(requireAuth, (req, res, next) => {
   };
   const xssStop = TripService.serializeStop(newStop);
   // console.log(xssStop)
-<<<<<<< HEAD
-  TripService.insertStop(db, newStop)
-    .then((res) => {
-      res.status(201).json(xssStop);
-=======
   TripService.insertStop(db, xssStop)
     .then((stop) => {
       res.status(201).json(xssStop)
->>>>>>> 355992360101a42f3534f287639b699778fe7eee
     })
     .catch(next);
 });

@@ -1,4 +1,5 @@
 const bcrypt = require('bcryptjs')
+const xss = require('xss')
 
 const REGEX_UPPER_LOWER_NUMBER_SPECIAL = /(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&])[\S]+/
 
@@ -37,9 +38,22 @@ const UserService = {
   serializeUser(user) {
     return {
       id: user.id,
-      user_name: user.username,
+      user_name: xss(user.username),
     }
   },
+
+  getById(db, user_id) {
+    return db('ways_user')
+    .select('*')
+    .where('id', user_id)
+    .first()
+  },
+
+  deleteUser(db, user_id) {
+    return db('ways_user')
+    .where(user_id)
+    .delete()
+  }
 
 }
 

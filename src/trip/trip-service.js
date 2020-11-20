@@ -1,10 +1,5 @@
 // Service Objects:
-//  getTrips
-//  getStops
-//  getStopsByUserId?
-//  getTripsByUserId?
-//  getTripsWithStops?
-//  getStopsByTripId?
+
 const xss = require("xss");
 
 const TripService = {
@@ -18,9 +13,6 @@ const TripService = {
   insertTrip(db, newTrip) {
     return db.insert(newTrip).into("trips");
   },
-  insertStop(db, newStop) {
-    return db.insert(newStop).into("stops");
-  },
   getStops(db) {
     return db("stops")
       .select("*")
@@ -28,12 +20,27 @@ const TripService = {
         return res;
       });
   },
+  insertStop(db, newStop) {
+    return db.insert(newStop).into("stops");
+  },
+  getTripsById(db, id) {
+    return db("trips").where("id", id);
+  },
+
   getStopsById(db, id) {
     return db("stops").where("trip_id", id);
   },
 
   getTripsForUser(db, user_id) {
       return db("trips").where("user_id", user_id)
+  },
+
+  deleteTrip(db, id) {
+    return db("trips").where({ id }).delete()
+  },
+
+  updateTrip(db, id, newTripFields) {
+    return db("trips").where({ id }).update(newTripFields)
   },
 
   serializeTrip(trip) {
@@ -48,7 +55,7 @@ const TripService = {
   },
 
   serializeStop(stop) {
-    console.log(stop)
+    // console.log(stop)
     return {
       trip_id: stop.trip_id,
       longitude: stop.longitude,

@@ -17,20 +17,14 @@ tripsRouter
   })
   .post(requireAuth, (req, res, next) => {
     const db = req.app.get("db");
-    const {
-      short_description,
-      destination,
-      days,
-      activities,
-      rating,
-    } = req.body;
+    const { short_description, destination, days, activities, img } = req.body;
 
     const newTrip = {
       short_description,
       destination,
       days,
       activities,
-      rating,
+      img,
     };
 
     newTrip.user_id = req.user.id;

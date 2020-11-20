@@ -11,42 +11,28 @@ tripsRouter
   .get((req, res, next) => {
     const db = req.app.get("db");
     TripService.getTrips(db)
-      .then((trips) => {
+      .then(async (trips) => {
         return res.json(trips);
       })
       .catch(next);
   })
   .post(requireAuth, (req, res, next) => {
     const db = req.app.get("db");
-    const {
-      short_description,
-      destination,
-      days,
-      activities,
-      rating,
-    } = req.body;
+    const { short_description, destination, days, activities, img } = req.body;
 
     const newTrip = {
       short_description,
       destination,
       days,
       activities,
-      rating,
+      img,
     };
 
     newTrip.user_id = req.user.id;
-    
-    // for (const [key, value] of Object.entries(newTrip)) {
-    //   if (value == null) {
-    //     return res.status(400).json({
-    //       error: { message: `Missing '${key}' in request body` }
-    //     })
-    //   }
-    // }
-
-    TripService.insertTrip(db, newTrip)
+    const xssTrip = TripService.serializeTrip(newTrip);
+    TripService.insertTrip(db, xssTrip)
       .then((trip) => {
-        res.status(201).json(TripService.serializeTrip(trip));
+        res.status(201).json(xssTrip);
       })
       .catch(next);
   });
@@ -127,16 +113,44 @@ tripsRouter.route("/stops/:trip_id").get((req, res, next) => {
 
 tripsRouter.route("/stops").post(requireAuth, (req, res, next) => {
   const db = req.app.get("db");
-  const { id, longitude, latitude, city, state, stop_name, description, category } = req.body;
+  const {
+    trip_id,
+    longitude,
+    latitude,
+    city,
+    state,
+    stop_name,
+    description,
+    category,
+  } = req.body;
 
-  const newStop = { id, longitude, latitude, city, state, stop_name, description, category }
-  const xssStop = TripService.serializeStop(newStop)
-  
-  TripService.insertStop(db, newStop)
-    .then((newStop) => {
-      res.status(201).json(xssStop)
+  const newStop = {
+    trip_id,
+    longitude,
+    latitude,
+    city,
+    state,
+    stop_name,
+    description,
+    category,
+  };
+
+  TripService.verifyTripCreatorAuth(db, trip_id)
+    .then((verifiedID) => {
+      if (verifiedID.user_id === req.user.id) {
+        const xssStop = TripService.serializeStop(newStop);
+        TripService.insertStop(db, xssStop)
+          .then(() => {
+            res.status(201).json(xssStop);
+          })
+          .catch(next);
+      } else {
+        res.status(401).json({
+          error: `Unauthorized Access`,
+        });
+      }
     })
-    .catch(next)
+    .catch(next);
 });
 
 module.exports = tripsRouter;

@@ -10,7 +10,7 @@ CREATE TABLE trips (
     id SERIAL PRIMARY KEY,
     date_added TIMESTAMPTZ NOT NULL DEFAULT now(),
     short_description TEXT NOT NULL,
-    rating INTEGER,
+    rating INTEGER DEFAULT NULL,
     destination TEXT,
     activities TEXT,
     img text,

@@ -28,11 +28,12 @@ const TripService = {
   },
 
   getStopsById(db, id) {
+    console.log("ID!!!!!", id)
     return db("stops").where("trip_id", id);
   },
 
   getTripsForUser(db, user_id) {
-      return db("trips").where("user_id", user_id)
+    return db("trips").where("user_id", user_id);
   },
 
   deleteTrip(db, id) {
@@ -46,16 +47,17 @@ const TripService = {
   serializeTrip(trip) {
     return {
       id: trip.id,
-      short_description: xss(trip.title),
+      short_description: xss(trip.short_description),
       rating: trip.rating,
       destination: xss(trip.destination),
       days: trip.days,
+      activities: trip.activities,
       user_id: trip.user_id,
+      img: trip.img,
     };
   },
 
   serializeStop(stop) {
-    // console.log(stop)
     return {
       trip_id: stop.trip_id,
       longitude: stop.longitude,
@@ -66,6 +68,9 @@ const TripService = {
       description: xss(stop.description),
       category: xss(stop.category),
     };
+  },
+  verifyTripCreatorAuth(db, id) {
+    return db("trips").select("user_id").where({ id }).first();
   },
 };
 

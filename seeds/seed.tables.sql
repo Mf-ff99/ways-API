@@ -8,9 +8,9 @@ TRUNCATE
 INSERT INTO ways_users 
 (id, user_name, password) 
 VALUES 
-(1, 'John Rambo', 'password'),
-(2, 'Tony Starks', 'password'),
-(3, 'Natasha Romanova', 'password');
+(1, 'John Rambo', '$2a$12$UcN8ux9F9ziecnzMU0vtUuC3lG416D0qiBR82NPLc6e2WNpKA3STC'), --password
+(2, 'Tony Starks', '$2a$12$UcN8ux9F9ziecnzMU0vtUuC3lG416D0qiBR82NPLc6e2WNpKA3STC'), --passowrd
+(3, 'Natasha Romanova', '$2a$12$UcN8ux9F9ziecnzMU0vtUuC3lG416D0qiBR82NPLc6e2WNpKA3STC'); --password
 
 INSERT INTO trips
 (id, user_id, short_description, rating, destination, days, activities, img) 

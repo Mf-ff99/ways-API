@@ -60,12 +60,13 @@ tripsRouter.route("/stops").post(requireAuth, (req, res, next) => {
   const { trip_id, longitude, latitude, city, state, stop_name, description, category } = req.body;
 
   const newStop = { trip_id, longitude, latitude, city, state, stop_name, description, category }
-  
+  const xssStop = TripService.serializeStop(newStop)
+  // console.log(xssStop)
   TripService.insertStop(db, newStop)
     .then((newStop) => {
-      res.status(201).json(TripService.serializeStop(newStop))
+      res.status(201).json(xssStop)
     })
     .catch(next)
-})
+});
 
 module.exports = tripsRouter;

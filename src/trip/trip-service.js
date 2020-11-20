@@ -28,7 +28,6 @@ const TripService = {
   },
 
   getStopsById(db, id) {
-    console.log("ID!!!!!", id)
     return db("stops").where("trip_id", id);
   },
 

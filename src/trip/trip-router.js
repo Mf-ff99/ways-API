@@ -37,7 +37,7 @@ tripsRouter
       .catch(next);
   });
 
-tripsRouter.route("/:id").all((req, res, next) => {
+tripsRouter.route("/single/:id").all((req, res, next) => {
   TripService.getTripsById(req.app.get("db"), parseInt(req.params.id))
 
   .then(trip => {
@@ -112,6 +112,7 @@ tripsRouter.route("/stops/:trip_id").get((req, res, next) => {
 });
 
 tripsRouter.route("/stops").post(requireAuth, (req, res, next) => {
+  console.log("REQ!!!!!", req.body)
   const db = req.app.get("db");
   const {
     trip_id,

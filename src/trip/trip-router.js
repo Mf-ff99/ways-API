@@ -28,12 +28,9 @@ tripsRouter
     };
 
     newTrip.user_id = req.user.id;
-    const xssTrip = TripService.serializeTrip(newTrip)
-    console.log(req.user.id);
-    console.log(xssTrip)
+    const xssTrip = TripService.serializeTrip(newTrip);
     TripService.insertTrip(db, xssTrip)
       .then((trip) => {
-        console.log(trip)
         res.status(201).json(xssTrip);
       })
       .catch(next);
@@ -75,11 +72,21 @@ tripsRouter.route("/stops").post(requireAuth, (req, res, next) => {
     description,
     category,
   };
-  const xssStop = TripService.serializeStop(newStop);
-  // console.log(xssStop)
-  TripService.insertStop(db, xssStop)
-    .then((stop) => {
-      res.status(201).json(xssStop)
+
+  TripService.verifyTripCreatorAuth(db, trip_id)
+    .then((verifiedID) => {
+      if (verifiedID.user_id === req.user.id) {
+        const xssStop = TripService.serializeStop(newStop);
+        TripService.insertStop(db, xssStop)
+          .then(() => {
+            res.status(201).json(xssStop);
+          })
+          .catch(next);
+      } else {
+        res.status(401).json({
+          error: `Unauthorized Access`,
+        });
+      }
     })
     .catch(next);
 });

@@ -33,7 +33,7 @@ const TripService = {
   },
 
   getTripsForUser(db, user_id) {
-      return db("trips").where("user_id", user_id)
+    return db("trips").where("user_id", user_id);
   },
 
   serializeTrip(trip) {
@@ -50,7 +50,6 @@ const TripService = {
   },
 
   serializeStop(stop) {
-    console.log(stop)
     return {
       trip_id: stop.trip_id,
       longitude: stop.longitude,
@@ -61,6 +60,9 @@ const TripService = {
       description: xss(stop.description),
       category: xss(stop.category),
     };
+  },
+  verifyTripCreatorAuth(db, id) {
+    return db("trips").select("user_id").where({ id }).first();
   },
 };
 

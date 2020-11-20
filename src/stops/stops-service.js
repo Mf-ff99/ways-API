@@ -14,10 +14,14 @@ const StopService = {
       return db.insert(newStop).into("stops");
     },
   
-    getStopsById(db, id) {
+    getStopsByTripId(db, id) {
       return db("stops").where("trip_id", id);
     },
     
+    getStopsById(db, id) {
+      return db("stops").where("id", id);
+    },
+
     deleteStop(db, id) {
       return db("stops").where({ id }).delete()
     },

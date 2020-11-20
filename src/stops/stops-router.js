@@ -12,7 +12,7 @@ stopsRouter.route("/:trip_id").get((req, res, next) => {
   
     const id = req.params.trip_id;
   
-    StopService.getStopsById(db, id)
+    StopService.getStopsByTripId(db, id)
       .then((stops) => {
         return res.json(stops);
       })
@@ -63,7 +63,7 @@ stopsRouter.route("/").post(requireAuth, (req, res, next) => {
   
   stopsRouter.route("/single/:id").all((req, res, next) => {
     StopService.getStopsById(req.app.get("db"), parseInt(req.params.id))
-  
+    
     .then(stop => {
       if(!stop) {
         return res.status(404).json({

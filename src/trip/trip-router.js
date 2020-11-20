@@ -1,5 +1,5 @@
 const express = require("express");
-const bcrypt = require("bcryptjs");
+// const bcrypt = require("bcryptjs");
 const TripService = require("./trip-service");
 const { requireAuth } = require("../middleware/jwt-auth");
 
@@ -22,7 +22,7 @@ tripsRouter
     const newTrip = { short_description, destination, days, activities };
 
     newTrip.user_id = req.user.id;
-    console.log(req.user.id);
+    // console.log(req.user.id);
     TripService.insertTrip(db, newTrip)
       .then((trip) => {
         res.status(201).json(TripService.serializeTrip(trip));

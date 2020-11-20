@@ -57,7 +57,7 @@ tripsRouter.route("/stops").post(requireAuth, (req, res, next) => {
   const newStop = { trip_id, longitude, latitude, city, state, stop_name, description, category }
   const xssStop = TripService.serializeStop(newStop)
   // console.log(xssStop)
-  TripService.insertStop(db, newStop)
+  TripService.insertStop(db, xssStop)
     .then((res) => {
       res.status(201).json(xssStop)
     })

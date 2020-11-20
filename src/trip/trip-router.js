@@ -63,7 +63,7 @@ tripsRouter.route("/stops").post(requireAuth, (req, res, next) => {
   const xssStop = TripService.serializeStop(newStop)
   // console.log(xssStop)
   TripService.insertStop(db, newStop)
-    .then((newStop) => {
+    .then((res) => {
       res.status(201).json(xssStop)
     })
     .catch(next)

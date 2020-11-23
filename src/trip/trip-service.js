@@ -12,7 +12,7 @@ const TripService = {
   },
 
   insertTrip(db, newTrip) {
-    return db.insert(newTrip).into("trips");
+    return db.insert(newTrip).into("trips").returning("*");
   },
 
   // getStops(db) {
@@ -40,7 +40,7 @@ const TripService = {
   },
 
   deleteTrip(db, id) {
-    return db("trips").where({ id }).delete()
+    return db("trips").where({ id }).delete();
   },
 
   // deleteStop(db, id) {
@@ -48,7 +48,7 @@ const TripService = {
   // },
 
   updateTrip(db, id, newTripFields) {
-    return db("trips").where({ id }).update(newTripFields)
+    return db("trips").where({ id }).update(newTripFields);
   },
 
   // updateStop(db, id, newStopFields) {

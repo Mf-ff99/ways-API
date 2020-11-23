@@ -29,74 +29,72 @@ tripsRouter
     };
 
     newTrip.user_id = req.user.id;
-    const xssTrip = TripService.serializeTrip(newTrip);
-    TripService.insertTrip(db, xssTrip)
-      .then((trip) => {
-        res.status(201).json(xssTrip);
+    TripService.insertTrip(db, newTrip)
+      .then(([trip]) => {
+        res.status(201).json(TripService.serializeTrip(trip));
       })
       .catch(next);
   });
 
-tripsRouter.route("/single/:id").all((req, res, next) => {
-  TripService.getTripsById(req.app.get("db"), parseInt(req.params.id))
+tripsRouter
+  .route("/single/:id")
+  .all((req, res, next) => {
+    TripService.getTripsById(req.app.get("db"), parseInt(req.params.id))
 
-  .then(trip => {
-    if(!trip) {
-      return res.status(404).json({
-        error: { message: `Trip does not exist`}
+      .then((trip) => {
+        if (!trip) {
+          return res.status(404).json({
+            error: { message: `Trip does not exist` },
+          });
+        }
+        res.trip = trip;
+        next();
       })
-    }
-    res.trip = trip
-    next()
+      .catch(next);
   })
-  .catch(next)
-}) 
-.get((req, res, next) => {
-  res.json(res.trip)
-}) 
-.delete((req, res, next) => {
-  TripService.deleteTrip(
-    req.app.get('db'),
-    parseInt(req.params.id)
-  )
-  .then( () => {
-    res.status(204).end()
+  .get((req, res, next) => {
+    res.json(res.trip);
   })
-  .catch(next)
-})
-.patch((req, res, next) => {
-  const {
-    short_description,
-    destination,
-    days,
-    activities,
-    rating,
-  } = req.body;
+  .delete((req, res, next) => {
+    TripService.deleteTrip(req.app.get("db"), parseInt(req.params.id))
+      .then(() => {
+        res.status(204).end();
+      })
+      .catch(next);
+  })
+  .patch((req, res, next) => {
+    const {
+      short_description,
+      destination,
+      days,
+      activities,
+      rating,
+    } = req.body;
 
-  const updateTrip = {
-    short_description,
-    destination,
-    days,
-    activities,
-    rating,
-  };
+    const updateTrip = {
+      short_description,
+      destination,
+      days,
+      activities,
+      rating,
+    };
 
-  const valuesToUpdate = Object.values(updateTrip).filter(Boolean).length
-  if (valuesToUpdate === 0)
-  return res.status(400).json({
-    error: {message: `Request body must contain a value to be updated`}
-  }) 
-  
-  TripService.updateTrip(
-    req.app.get('db'),
-    parseInt(req.params.id),
-    updateTrip
-  )
-  .then(() => {
-    res.status(204).end()
-  })
-  .catch(next)
-})
+    const valuesToUpdate = Object.values(updateTrip).filter(Boolean).length;
+    if (valuesToUpdate === 0)
+      return res.status(400).json({
+        error: { message: `Request body must contain a value to be updated` },
+      });
+
+    TripService.updateTrip(
+      req.app.get("db"),
+      parseInt(req.params.id),
+      updateTrip
+    )
+      .then(() => {
+        res.status(204).end();
+      })
+      .catch(next);
+  });
 
 // tripsRouter.route("/stops/:trip_id").get((req, res, next) => {
 //   const db = req.app.get("db");
@@ -166,10 +164,10 @@ tripsRouter.route("/single/:id").all((req, res, next) => {
 //     next()
 //   })
 //   .catch(next)
-// }) 
+// })
 // .get((req, res, next) => {
 //   res.json(res.stop)
-// }) 
+// })
 // .delete((req, res, next) => {
 //   TripService.deleteStop(
 //     req.app.get('db'),
@@ -207,8 +205,8 @@ tripsRouter.route("/single/:id").all((req, res, next) => {
 //   if (valuesToUpdate === 0)
 //   return res.status(400).json({
 //     error: {message: `Request body must contain a value to be updated`}
-//   }) 
-  
+//   })
+
 //   TripService.updateStop(
 //     req.app.get('db'),
 //     parseInt(req.params.id),

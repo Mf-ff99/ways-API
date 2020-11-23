@@ -37,7 +37,7 @@ tripsRouter
   });
 
 tripsRouter
-  .route("/single/:id")
+  .route("/:id")
   .all((req, res, next) => {
     TripService.getTripsById(req.app.get("db"), parseInt(req.params.id))
 

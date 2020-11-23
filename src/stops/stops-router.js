@@ -11,8 +11,13 @@ stopsRouter.route("/:trip_id").get((req, res, next) => {
     // get id of trip from params
   
     const id = req.params.trip_id;
+<<<<<<< HEAD
     console.log(id)
     StopService.getStopsById(db, id)
+=======
+  
+    StopService.getStopsByTripId(db, id)
+>>>>>>> 0495613ed20c6783045ffb1df6ce640c61465dae
       .then((stops) => {
         return res.json(stops);
       })
@@ -63,7 +68,7 @@ stopsRouter.route("/").post(requireAuth, (req, res, next) => {
   
   stopsRouter.route("/single/:id").all((req, res, next) => {
     StopService.getStopsById(req.app.get("db"), parseInt(req.params.id))
-  
+    
     .then(stop => {
       if(!stop) {
         return res.status(404).json({

@@ -15,7 +15,13 @@ const StopService = {
     },
   
     getStopsById(db, id) {
-      return db("stops").where("trip_id", id);
+      return db
+            .select("stops.trip_id", "stops.longitude", "stops.latitude", "stops.city", "stops.state", "stops.stop_name", "stops.description", "stops.category")
+            .from('stops')
+            .join('trips', {
+              'trips.id': 'stops.trip_id'
+            })
+            .where("stops.trip_id", id);
     },
     
     deleteStop(db, id) {

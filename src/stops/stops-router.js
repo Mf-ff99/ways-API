@@ -11,7 +11,7 @@ stopsRouter.route("/:trip_id").get((req, res, next) => {
     // get id of trip from params
   
     const id = req.params.trip_id;
-  
+    console.log(id)
     StopService.getStopsById(db, id)
       .then((stops) => {
         return res.json(stops);

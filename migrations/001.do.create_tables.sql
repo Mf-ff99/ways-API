@@ -22,8 +22,8 @@ CREATE TABLE trips (
 CREATE TABLE stops (
     id SERIAL PRIMARY KEY,
     trip_id INTEGER REFERENCES trips(id) ON DELETE CASCADE NOT NULL,
-    long FLOAT,
-    lat FLOAT,
+    longitude FLOAT,
+    latitude FLOAT,
     city TEXT,
     state TEXT,
     stop_name TEXT,

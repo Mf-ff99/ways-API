@@ -13,13 +13,13 @@ VALUES
 (3, 'Natasha Romanova', '$2a$12$UcN8ux9F9ziecnzMU0vtUuC3lG416D0qiBR82NPLc6e2WNpKA3STC'); --password
 
 INSERT INTO trips
-(id, user_id, short_description, rating, destination, days, activities, img) 
+(id, user_id, short_description, long, lat, rating, destination, days, activities, img) 
 VALUES 
-(1, 1, 'Disneyworld Trip', 5, 'Orlando, FL', 1, 'DisneyLand, Wax-Museum', 'amusementpark'),
-(2, 2, 'New York, baby!', 2, 'New York, NY', 2, 'Shopping, Sight-Seeing', 'city'),
-(3, 3, 'Las Vegas Night Life', 4, 'Las Vegas, NV', 3, 'Casinos, Sight-Seeing', 'nightlife'),
-(4, 3, 'Windy City Heat', 2, 'Chicago, IL', 2, 'Shopping, Sight-Seeing', 'countryside'),
-(5, 2, 'Maple Leaf State', 2, 'Toronto', 2, 'Shopping, Sight-Seeing', 'mountain');
+(1, 1, 'Disneyworld Trip',-81.5639, 28.3852, 5, 'Orlando, FL', 1, 'DisneyLand, Wax-Museum', 'amusementpark'),
+(2, 2, 'New York, baby!',-73.985130, 40.758896, 2, 'New York, NY', 2, 'Shopping, Sight-Seeing', 'city'),
+(3, 3, 'Las Vegas Night Life', -115.1398, 36.1699, 4, 'Las Vegas, NV', 3, 'Casinos, Sight-Seeing', 'nightlife'),
+(4, 3, 'Windy City Heat', 41.8781, 87.6298, 2, 'Chicago, IL', 2, 'Shopping, Sight-Seeing', 'countryside'),
+(5, 2, 'Maple Leaf State', 43.6532, 79.3832, 2, 'Toronto', 2, 'Shopping, Sight-Seeing', 'mountain');
 
 
 INSERT INTO stops 

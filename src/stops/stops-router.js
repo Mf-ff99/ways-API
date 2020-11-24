@@ -3,6 +3,7 @@ const express = require("express");
 const StopService = require("./stops-service");
 const { requireAuth } = require("../middleware/jwt-auth");
 const { Console } = require("winston/lib/winston/transports");
+const TripService = require("../trip/trip-service");
 
 const stopsRouter = express.Router();
 
@@ -116,8 +117,8 @@ stopsRouter
       parseInt(req.params.stop_id),
       updateStop
     )
-      .then(() => {
-        res.status(204).end();
+      .then(([result]) => {
+        res.status(201).json(StopService.serializeStop(result));
       })
       .catch(next);
   });

@@ -22,7 +22,7 @@ const StopService = {
   },
 
   updateStop(db, id, newStopFields) {
-    return db("stops").where({ id }).update(newStopFields);
+    return db("stops").where({ id }).update(newStopFields).returning("*");
   },
 
   serializeStop(stop) {
@@ -35,6 +35,7 @@ const StopService = {
       stop_name: xss(stop.stop_name),
       description: xss(stop.description),
       category: xss(stop.category),
+      id: stop.id,
     };
   },
   verifyTripCreatorAuth(db, id) {

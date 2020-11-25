@@ -22,7 +22,7 @@ const StopService = {
   },
 
   updateStop(db, id, newStopFields) {
-    return db("stops").where({ id }).update(newStopFields);
+    return db("stops").where({ id }).update(newStopFields).returning("*");
   },
 
   serializeStop(stop) {
@@ -35,10 +35,20 @@ const StopService = {
       stop_name: xss(stop.stop_name),
       description: xss(stop.description),
       category: xss(stop.category),
+      id: stop.id,
     };
   },
   verifyTripCreatorAuth(db, id) {
     return db("trips").select("user_id").where({ id }).first();
+  },
+  getAllStops(db, user_id) {
+    return db("stops")
+      .select("stops.city", "stops.state")
+      .join("trips", "trips.id", "=", "stops.trip_id")
+      .where("trips.user_id", user_id)
+      .then((res) => {
+        console.log(res);
+      });
   },
 };
 

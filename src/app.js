@@ -24,11 +24,6 @@ app.use("/api/user", userRouter);
 app.use("/api/trips", tripsRouter);
 app.use("/api/stops", stopsRouter);
 
-app.get("/", (req, res) => {
-  res.send("Hello, Beautiful!");
-});
-
-
 app.use(function errorHandler(error, req, res, next) {
   let response;
   if (NODE_ENV === "production") {

@@ -3,6 +3,7 @@ const express = require("express");
 const TripService = require("./trip-service");
 const { requireAuth } = require("../middleware/jwt-auth");
 const { Console } = require("winston/lib/winston/transports");
+const StopService = require("../stops/stops-service");
 
 const tripsRouter = express.Router();
 
@@ -94,8 +95,8 @@ tripsRouter
       parseInt(req.params.id),
       updateTrip
     )
-      .then(() => {
-        res.status(204).end();
+      .then((result) => {
+        res.status(201).json(result);
       })
       .catch(next);
   });

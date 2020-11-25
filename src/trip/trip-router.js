@@ -90,8 +90,8 @@ tripsRouter
       parseInt(req.params.id),
       updateTrip
     )
-      .then(() => {
-        res.status(204).end();
+      .then((result) => {
+        res.status(201).json(result);
       })
       .catch(next);
   });

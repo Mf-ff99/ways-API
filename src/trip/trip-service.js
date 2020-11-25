@@ -48,7 +48,7 @@ const TripService = {
   // },
 
   updateTrip(db, id, newTripFields) {
-    return db("trips").where({ id }).update(newTripFields);
+    return db("trips").where({ id }).update(newTripFields).returning("*");
   },
 
   // updateStop(db, id, newStopFields) {

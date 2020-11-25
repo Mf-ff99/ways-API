@@ -16,6 +16,9 @@ app.use(helmet());
 app.use(cors());
 app.use(express.json());
 
+
+// Routes
+
 app.use("/api/auth", authRouter);
 app.use("/api/user", userRouter);
 app.use("/api/trips", tripsRouter);
@@ -24,6 +27,7 @@ app.use("/api/stops", stopsRouter);
 app.get("/", (req, res) => {
   res.send("Hello, Beautiful!");
 });
+
 
 app.use(function errorHandler(error, req, res, next) {
   let response;

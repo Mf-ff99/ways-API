@@ -18,12 +18,16 @@ tripsRouter
   })
   .post(requireAuth, (req, res, next) => {
     const db = req.app.get("db");
-    const { short_description, destination, days, activities, img } = req.body;
+    const { short_description, destination, days, activities, img, long, lat } = req.body;
+
+    console.log(long, lat)
 
     const newTrip = {
       short_description,
       destination,
       days,
+      lat, 
+      long,
       activities,
       img,
     };

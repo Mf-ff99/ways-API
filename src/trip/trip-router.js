@@ -3,6 +3,7 @@ const express = require("express");
 const TripService = require("./trip-service");
 const { requireAuth } = require("../middleware/jwt-auth");
 const { Console } = require("winston/lib/winston/transports");
+const StopService = require("../stops/stops-service");
 
 const tripsRouter = express.Router();
 

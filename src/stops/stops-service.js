@@ -41,6 +41,15 @@ const StopService = {
   verifyTripCreatorAuth(db, id) {
     return db("trips").select("user_id").where({ id }).first();
   },
+  getAllStops(db, user_id) {
+    return db("stops")
+      .select("stops.city", "stops.state")
+      .join("trips", "trips.id", "=", "stops.trip_id")
+      .where("trips.user_id", user_id)
+      .then((res) => {
+        console.log(res);
+      });
+  },
 };
 
 module.exports = StopService;

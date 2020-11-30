@@ -3,6 +3,7 @@ const express = require("express");
 const TripService = require("./trip-service");
 const { requireAuth } = require("../middleware/jwt-auth");
 const { Console } = require("winston/lib/winston/transports");
+const StopsService = require("../stops/stops-service");
 
 const tripsRouter = express.Router();
 
@@ -47,22 +48,32 @@ tripsRouter
             error: { message: `Trip does not exist` },
           });
         }
-        res.trip = trip;
+        req.trip = trip;
         next();
       })
       .catch(next);
   })
   .get((req, res, next) => {
-    res.json(res.trip);
+    res.json(req.trip);
   })
-  .delete((req, res, next) => {
-    TripService.deleteTrip(req.app.get("db"), parseInt(req.params.id))
-      .then(() => {
-        res.status(204).end();
-      })
-      .catch(next);
+  .delete(requireAuth, (req, res, next) => {
+    StopsService.getTripCreatorByTripId(req.app.get("db"), req.params.id).then(
+      (verifiedID) => {
+        if (verifiedID.user_id === req.user.id) {
+          TripService.deleteTrip(req.app.get("db"), parseInt(req.params.id))
+            .then(() => {
+              res.status(204).end();
+            })
+            .catch(next);
+        } else {
+          res.status(401).json({
+            error: `Unauthorized Access`,
+          });
+        }
+      }
+    );
   })
-  .patch((req, res, next) => {
+  .patch(requireAuth, (req, res, next) => {
     const {
       short_description,
       destination,
@@ -85,15 +96,25 @@ tripsRouter
         error: { message: `Request body must contain a value to be updated` },
       });
 
-    TripService.updateTrip(
-      req.app.get("db"),
-      parseInt(req.params.id),
-      updateTrip
-    )
-      .then((result) => {
-        res.status(201).json(result);
-      })
-      .catch(next);
+    StopsService.getTripCreatorByTripId(req.app.get("db"), req.params.id).then(
+      (verifiedID) => {
+        if (verifiedID.user_id === req.user.id) {
+          TripService.updateTrip(
+            req.app.get("db"),
+            parseInt(req.params.id),
+            updateTrip
+          )
+            .then((result) => {
+              res.status(201).json(result);
+            })
+            .catch(next);
+        } else {
+          res.status(401).json({
+            error: `Unauthorized Access`,
+          });
+        }
+      }
+    );
   });
 
 // tripsRouter.route("/stops/:trip_id").get((req, res, next) => {
@@ -133,7 +154,7 @@ tripsRouter
 //     category,
 //   };
 
-//   TripService.verifyTripCreatorAuth(db, trip_id)
+//   TripService.getTripCreatorByTripId(db, trip_id)
 //     .then((verifiedID) => {
 //       if (verifiedID.user_id === req.user.id) {
 //         const xssStop = TripService.serializeStop(newStop);

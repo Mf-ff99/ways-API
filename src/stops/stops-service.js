@@ -5,7 +5,7 @@ const StopService = {
     return db("stops")
       .select("stops.city", "stops.state")
       .join("trips", "trips.id", "=", "stops.trip_id")
-      .where("trips.user_id", user_id)
+      .where("trips.user_id", user_id);
   },
 
   insertStop(db, newStop) {
@@ -37,8 +37,15 @@ const StopService = {
       id: stop.id,
     };
   },
-  verifyTripCreatorAuth(db, id) {
+  getTripCreatorByTripId(db, id) {
     return db("trips").select("user_id").where({ id }).first();
+  },
+  getTripCreatorByStopId(db, id) {
+    return db("stops")
+      .select("trips.user_id")
+      .join("trips", "stops.trip_id", "trips.id")
+      .where({ "stops.id": id })
+      .first();
   },
 };
 

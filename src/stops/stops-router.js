@@ -1,6 +1,6 @@
 const express = require("express");
 // const bcrypt = require("bcryptjs");
-const StopService = require("./stops-service");
+const StopsService = require("./stops-service");
 const { requireAuth } = require("../middleware/jwt-auth");
 const { Console } = require("winston/lib/winston/transports");
 const TripService = require("../trip/trip-service");
@@ -10,12 +10,12 @@ const stopsRouter = express.Router();
 stopsRouter.get("/allStops/:user_id", (req, res, next) => {
   const db = req.app.get("db");
   const id = req.params.user_id;
-  StopService.getAllStops(db, id)
+  StopsService.getAllStops(db, id)
     .then((stops) => {
       return res.json(stops);
     })
     .catch(next);
-})
+});
 
 stopsRouter.get("/:trip_id", (req, res, next) => {
   const db = req.app.get("db");
@@ -23,7 +23,7 @@ stopsRouter.get("/:trip_id", (req, res, next) => {
 
   const id = req.params.trip_id;
 
-  StopService.getStopsById(db, id)
+  StopsService.getStopsById(db, id)
     .then((stops) => {
       return res.json(stops);
     })
@@ -54,12 +54,12 @@ stopsRouter.route("/").post(requireAuth, (req, res, next) => {
     category,
   };
 
-  StopService.verifyTripCreatorAuth(db, trip_id)
+  StopsService.getTripCreatorByTripId(db, trip_id)
     .then((verifiedID) => {
       if (verifiedID.user_id === req.user.id) {
-        StopService.insertStop(db, newStop)
+        StopsService.insertStop(db, newStop)
           .then(([result]) => {
-            return res.status(201).json(StopService.serializeStop(result));
+            return res.status(201).json(StopsService.serializeStop(result));
           })
           .catch(next);
       } else {
@@ -74,26 +74,38 @@ stopsRouter.route("/").post(requireAuth, (req, res, next) => {
 stopsRouter
   .route("/:stop_id")
   .all((req, res, next) => {
-    StopService.getStopsById(req.app.get("db"), parseInt(req.params.stop_id))
-      .then((stop) => {
-        if (!stop) {
+    StopsService.getStopsById(req.app.get("db"), parseInt(req.params.stop_id))
+      .then((stops) => {
+        if (!stops) {
           return res.status(404).json({
             error: { message: `Stop does not exist` },
           });
+        } else {
+          res.stops = stops;
+          next();
         }
-        res.stop = stop;
-        next();
       })
       .catch(next);
   })
-  .delete((req, res, next) => {
-    StopService.deleteStop(req.app.get("db"), parseInt(req.params.stop_id))
-      .then(() => {
-        res.status(204).end();
-      })
-      .catch(next);
+  .delete(requireAuth, (req, res, next) => {
+    StopsService.getTripCreatorByStopId(
+      req.app.get("db"),
+      req.params.stop_id
+    ).then((verifiedID) => {
+      if (verifiedID.user_id === req.user.id) {
+        StopsService.deleteStop(req.app.get("db"), parseInt(req.params.stop_id))
+          .then(() => {
+            res.status(204).end();
+          })
+          .catch(next);
+      } else {
+        res.status(401).json({
+          error: `Unauthorized Access`,
+        });
+      }
+    });
   })
-  .patch((req, res, next) => {
+  .patch(requireAuth, (req, res, next) => {
     const {
       trip_id,
       longitude,
@@ -122,15 +134,25 @@ stopsRouter
         error: { message: `Request body must contain a value to be updated` },
       });
 
-    StopService.updateStop(
-      req.app.get("db"),
-      parseInt(req.params.stop_id),
-      updateStop
-    )
-      .then(([result]) => {
-        res.status(201).json(StopService.serializeStop(result));
-      })
-      .catch(next);
+    StopsService.getTripCreatorByTripId(req.app.get("db"), trip_id).then(
+      (verifiedID) => {
+        if (verifiedID.user_id === req.user.id) {
+          StopsService.updateStop(
+            req.app.get("db"),
+            parseInt(req.params.stop_id),
+            updateStop
+          )
+            .then(([result]) => {
+              res.status(201).json(StopsService.serializeStop(result));
+            })
+            .catch(next);
+        } else {
+          res.status(401).json({
+            error: `Unauthorized Access`,
+          });
+        }
+      }
+    );
   });
 
 module.exports = stopsRouter;

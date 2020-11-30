@@ -1,12 +1,11 @@
 const xss = require("xss");
 
 const StopService = {
-  getStops(db) {
+  getAllStops(db, user_id) {
     return db("stops")
-      .select("*")
-      .then((res) => {
-        return res;
-      });
+      .select("stops.city", "stops.state")
+      .join("trips", "trips.id", "=", "stops.trip_id")
+      .where("trips.user_id", user_id)
   },
 
   insertStop(db, newStop) {

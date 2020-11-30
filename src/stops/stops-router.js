@@ -7,6 +7,16 @@ const TripService = require("../trip/trip-service");
 
 const stopsRouter = express.Router();
 
+stopsRouter.get("/allStops/:user_id", (req, res, next) => {
+  const db = req.app.get("db");
+  const id = req.params.user_id;
+  StopService.getAllStops(db, id)
+    .then((stops) => {
+      return res.json(stops);
+    })
+    .catch(next);
+})
+
 stopsRouter.get("/:trip_id", (req, res, next) => {
   const db = req.app.get("db");
   // get id of trip from params

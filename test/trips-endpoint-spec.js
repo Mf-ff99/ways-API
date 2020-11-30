@@ -4,7 +4,7 @@ const supertest = require('supertest')
 const { expect } = require('chai')
 const { TEST_DATABASE_URL } = require('../src/config')
 
-describe.only('Protected Endpoints', function () {
+describe.only('Trips Endpoints', function () {
     let db
 
     const testUsers = helpers.makeUserArray()
@@ -22,63 +22,109 @@ describe.only('Protected Endpoints', function () {
   
     afterEach('cleanup', () => helpers.cleanTables(db))
 
-    describe(`Endpoints unportected by user`, () => {
-        const tripsSpecificEndpoint = [
-            {
-                title: `GET /api/trips`,
-                path: `/api/trips`,
-                method: supertest(app).get
-            },
+    describe('GET /api/trips', () => {
+        context(`Given no trips`, () => {
+            it(`responds with 200 and an empty list`, () => {
+                return supertest(app)
+                .get('/api/trips')
+                .expect(200, [])
+            })
+        })
 
-            {
-                title: `GET /api/trips/stops`,
-                path: `/api/trips/stops`,
-                method: supertest(app).get
-            },
-        ]
+        context(`Given there are trips in the database`, () => {
+            beforeEach('insert users and trips', () => helpers.seedTrips(db, testUsers, testTrips, testStops))
+            
 
-        tripsSpecificEndpoint.forEach(endpoint => {
-            describe(endpoint.title, () => {
-                beforeEach('insert users, trips, and stops', () => {
-                    return helpers.seedTrips(
-                        db,
-                        testUsers,
-                        testTrips,
-                        testStops,
-                    )
-                })
-
-                it(`responds with 404 if user doesn't have any trips`, () => {
-                    return endpoint.method(endpoint.path)
-                    .set('Authorization', helpers.makeAuthHeader(testUsers[1]))
-                    .send({})
-                    .expect(404, {
-                        error: `You don't have any trips`,
-                    })
-                })    
+            it('responds with 200 and all trips', () => {
+                return supertest(app)
+                .get('/api/trips')
+                .expect(200, testTrips)
             })
         })
     })
 
-    // describe(`GET /api/trips`, () => {
-    //     const [ usersTrip ] = testTrips.filter(
-    //         trip => trip.user_id === testUser.id
-    //     )
-    //     const usersStops = testStops.filter(
-    //         stop => stop.trip_id == usersTrip.id
-    //     )
-        
-    //     it(`responds with 200 and users's trips and stops`, () => {
-    //         return supertest(app)
-    //         .get(`/api/trips`)
-    //         .set('Authorization', helpers.makeAuthHeader(testUser))
-    //         .expect(200)
-    //         .expect(res => {
-    //             // expect(res.body).to.have.keys('trips', 'stops')
-    //             expect(res.body.trips).to.have.property('id', usersTrip.id)
+    describe('POST /api/trips', () => {
+        beforeEach('insert users', () => helpers.seedUsers(db, testUsers,))
+            
+            it(`Creates a trip, responds with 201 and new trip`, () => {
+                const newTrip = {
+                    "user_id": testUser.id,
+                    "id": 9,
+                    "date_added": "2020-11-25T17:22:33.075Z",
+                    "short_description": "New York, baby!",
+                    "long": -73.98513,
+                    "lat": 40.758896,
+                    "rating": 2,
+                    "destination": "New York, NY",
+                    "activities": "Shopping, Sight-Seeing",
+                    "img": "city",
+                    "days": 2
+                }
+                return supertest(app)
+                .post('/api/trips')
+                .set('Authorization', helpers.makeAuthHeader(testUser))
+                .send(newTrip)
+                .expect(201)
+                .expect( res => {
+                    expect(res.body.short_description).to.eql(newTrip.short_description)
+                    expect(res.body.destination).to.eql(newTrip.destination)
+                    expect(res.body.activities).to.eql(newTrip.activities)
+                    expect(res.body.img).to.eql(newTrip.img)
+                    // expect(res.body.rating).to.eql(newTrip.rating)
+                    // expect(res.body.long).to.eql(newTrip.long)
+                    // expect(res.body.lat).to.eql(newTrip.lat)
+                    expect(res.body.days).to.eql(newTrip.days)
+                    expect(res.body).to.have.property('id')
+                    
+                })
                 
-    //         })
+            })
+    })
 
-    //     })
-    // })
+    describe('PATCH /api/trips/:id', () => {
+        beforeEach('insert users and trips', () => helpers.seedTrips(db, testUsers, testTrips, testStops))
+        
+        it('responds with 204 and updates the trip', () => {
+            const idToUpdate = 2
+            
+            const updateTrip = {
+                'destination': 'someplace else to go',
+                'short_description': 'in the world',
+                'activities': 'having fun',
+                'days': 3,
+                'img': 'picture',
+                'rating': 3,
+                'user_id': testUser.id,
+            }
+
+            return supertest(app)
+            .patch(`/api/trips/${idToUpdate}`)
+            .set('Authorization', helpers.makeAuthHeader(testUser))
+            .send(updateTrip)
+            .expect(204)
+        })
+    })
+
+    describe('DELETE /api/trips/:id', () => {
+        context('Given there are trips in the database', () => {
+
+            beforeEach('insert users and trips', () => helpers.seedTrips(db, testUsers, testTrips, testStops))
+
+            it('removes the trip by ID', () => {
+                const idToRemove = 2
+                const expectedTrips = testTrips.filter(trip => trip.id !== idToRemove)
+
+                return supertest(app)
+                .delete(`/api/trips/${idToRemove}`)
+                .set('Authorization', helpers.makeAuthHeader(testUser))
+                .expect(204)
+                .then(() =>
+                    supertest(app)
+                    .get(`/api/trips`)
+                    .expect(expectedTrips)
+                )
+
+            })
+        })
+    })
 })

@@ -3,7 +3,8 @@ BEGIN;
 TRUNCATE
   stops,
   trips,
-  ways_users;
+  ways_users,
+  ratings;
 
 INSERT INTO ways_users 
 (id, user_name, password) 
@@ -31,6 +32,13 @@ VALUES
 (2, '-73.966562', '40.781317', 'New York City', 'NY', 'Central Park', 'This is a big ass park. Go here for your daily does of greenery.', 'Tourist Attraction', 'https://live.staticflickr.com/7398/28132606265_080649d857.jpg'),
 (3, '-115.1398', '36.1699','Las Vegas', 'NV', 'Eiffel Tower', 'Elevated French haunt offering Strip views from the 11th floor of Paris Las Vegas', 'Tourist Attraction', 'https://live.staticflickr.com/65535/26721413146_438c3a7987.jpg'),
 (3, '-115.1398', '36.1699','Las Vegas', 'NV', 'Venetian Hotel', 'The Venetian Hotel in Las Vegas is located on the Strip, across from Treasure Island.', 'Tourist Attraction', 'https://live.staticflickr.com/65535/49616923966_be21157eab.jpg');
+
+INSERT INTO ratings (trip_id, user_id, rating)
+VALUES
+(1, 1, 1),
+(2, 2, 1),
+(1, 2, 1),
+(3, 1, 1);
 
 SELECT setval('stops_id_seq', (SELECT MAX(id) from "stops"));
 SELECT setval('trips_id_seq', (SELECT MAX(id) from "trips"));

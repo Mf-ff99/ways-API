@@ -32,4 +32,11 @@ CREATE TABLE stops (
     img TEXT
 );
 
+CREATE TABLE ratings(
+  trip_id INTEGER references trips(id),
+  user_id INTEGER references ways_users(id),
+  rating INTEGER NOT NULL,
+  PRIMARY KEY (trip_id, user_id)
+);	
+
 --  user_id_creator int references users (user_id) ON DELETE CASCADE NOT NULL,

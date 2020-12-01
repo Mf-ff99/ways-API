@@ -135,6 +135,13 @@ tripsRouter
     );
   });
 
+// tripsRouter
+//     .route('/rating')
+//     .post(requireAuth, (req, res, next) => {
+//       const { user_id, trip_id, rating} = req.body
+//       console.log(user_id, trip_id, rating)
+//     })
+
 // tripsRouter.route("/stops/:trip_id").get((req, res, next) => {
 //   const db = req.app.get("db");
 //   // get id of trip from params

@@ -4,7 +4,7 @@ const supertest = require('supertest')
 const { expect } = require('chai')
 const { TEST_DATABASE_URL } = require('../src/config')
 
-describe('Trips Endpoints', function () {
+describe.only('Trips Endpoints', function () {
     let db
 
     const testUsers = helpers.makeUserArray()
@@ -22,7 +22,7 @@ describe('Trips Endpoints', function () {
   
     afterEach('cleanup', () => helpers.cleanTables(db))
 
-    describe('GET /api/trips', () => {
+    describe.only('GET /api/trips', () => {
         context(`Given no trips`, () => {
             it(`responds with 200 and an empty list`, () => {
                 return supertest(app)
@@ -49,7 +49,7 @@ describe('Trips Endpoints', function () {
             it(`Creates a trip, responds with 201 and new trip`, () => {
                 const newTrip = {
                     "user_id": testUser.id,
-                    "id": 9,
+                    "id": 4,
                     "date_added": "2020-11-25T17:22:33.075Z",
                     "short_description": "New York, baby!",
                     "long": -73.98513,

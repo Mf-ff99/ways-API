@@ -23,7 +23,7 @@ describe('Stops Endpoints', function() {
   
     afterEach('cleanup', () => helpers.cleanTables(db))
 
-    describe.skip('GET /api/stops', () => {
+    describe('GET /api/stops', () => {
         context(`Given no stops`, () => {
             it(`responds with 200 and an empty list`, () => {
                 return supertest(app)

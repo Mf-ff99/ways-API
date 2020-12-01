@@ -66,15 +66,15 @@ function makeTripsAndStops(user) {
     const trips = [
         {  
             id: 1,
-            date_added: '2020-11-30T16:39:14.898Z',
+            date_added: '2020-10-29T16:39:14.898Z',
             destination: 'someplace to go',
             short_description: 'words about what you did there',
             activities: 'restaurant',
-            long: -81.5639,
-            lat: 28.3852,
-            days: 3,
-            img: 'picture',
-            rating: 3,
+            long: -81.5636,
+            lat: 28.3850,
+            rating: null,
+            days: 2,
+            img: 'picture1',
             user_id: user.id,
         },
 
@@ -86,9 +86,9 @@ function makeTripsAndStops(user) {
             activities: 'sight-seeing',
             long: -81.5639,
             lat: 28.3852,
+            rating: null,
             days: 3,
             img: 'picture',
-            rating: 3,
             user_id: user.id,
         },
     ]

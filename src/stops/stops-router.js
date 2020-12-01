@@ -41,6 +41,7 @@ stopsRouter.route("/").post(requireAuth, (req, res, next) => {
     stop_name,
     description,
     category,
+    img,
   } = req.body;
 
   const newStop = {
@@ -52,6 +53,7 @@ stopsRouter.route("/").post(requireAuth, (req, res, next) => {
     stop_name,
     description,
     category,
+    img,
   };
 
   StopsService.getTripCreatorByTripId(db, trip_id)
@@ -115,6 +117,7 @@ stopsRouter
       stop_name,
       description,
       category,
+      img,
     } = req.body;
 
     const updateStop = {
@@ -126,6 +129,7 @@ stopsRouter
       stop_name,
       description,
       category,
+      img,
     };
 
     const valuesToUpdate = Object.values(updateStop).filter(Boolean).length;

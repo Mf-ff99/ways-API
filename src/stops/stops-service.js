@@ -35,6 +35,7 @@ const StopService = {
       description: xss(stop.description),
       category: xss(stop.category),
       id: stop.id,
+      img: xss(stop.img),
     };
   },
   getTripCreatorByTripId(db, id) {

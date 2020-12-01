@@ -23,14 +23,14 @@ VALUES
 
 
 INSERT INTO stops 
-(trip_id, longitude, latitude, city, state, stop_name, description, category) 
+(trip_id, longitude, latitude, city, state, stop_name, description, category, img) 
 VALUES 
-(1, '-81.5639', '28.3852', 'Orlando', 'FL', 'Disneyworld', 'The Walt Disney World Resort, also called Walt Disney World and Disney World, is an entertainment complex in Bay Lake and Lake Buena Vista, Florida, in the United States, near the cities of Orlando and Kissimmee.', 'Tourist Attraction'),
-(1, '-81.5639', '28.3852','Orlando', 'FL', 'Madame Tussauds', 'See life-size figures of your favorite celebrities at Madame Tussauds Orlando with this pre-purchased admission.', 'Tourist Attraction'),
-(2, '-73.985130', '40.758896', 'New York City', 'NY', 'Times Square', 'Lots of cool shit to see here', 'tourist_attraction'),
-(2, '-73.966562', '40.781317', 'New York City', 'NY', 'Central Park', 'This is a big ass park. Go here for your daily does of greenery.', 'Tourist Attraction'),
-(3, '-115.1398', '36.1699','Las Vegas', 'NV', 'Eiffel Tower', 'Elevated French haunt offering Strip views from the 11th floor of Paris Las Vegas', 'Tourist Attraction'),
-(3, '-115.1398', '36.1699','Las Vegas', 'NV', 'Venetian Hotel', 'The Venetian Hotel in Las Vegas is located on the Strip, across from Treasure Island.', 'Tourist Attraction');
+(1, '-81.5639', '28.3852', 'Orlando', 'FL', 'Disneyworld', 'The Walt Disney World Resort, also called Walt Disney World and Disney World, is an entertainment complex in Bay Lake and Lake Buena Vista, Florida, in the United States, near the cities of Orlando and Kissimmee.', 'Tourist Attraction', 'https://live.staticflickr.com/1538/26267224082_eb0e696f92.jpg'),
+(1, '-81.5639', '28.3852','Orlando', 'FL', 'Madame Tussauds', 'See life-size figures of your favorite celebrities at Madame Tussauds Orlando with this pre-purchased admission.', 'Tourist Attraction', 'https://live.staticflickr.com/65535/50204118936_114e0abd86.jpg'),
+(2, '-73.985130', '40.758896', 'New York City', 'NY', 'Times Square', 'Lots of cool shit to see here', 'tourist_attraction', 'https://live.staticflickr.com/1580/24036829791_1d15b38993.jpg'),
+(2, '-73.966562', '40.781317', 'New York City', 'NY', 'Central Park', 'This is a big ass park. Go here for your daily does of greenery.', 'Tourist Attraction', 'https://live.staticflickr.com/7398/28132606265_080649d857.jpg'),
+(3, '-115.1398', '36.1699','Las Vegas', 'NV', 'Eiffel Tower', 'Elevated French haunt offering Strip views from the 11th floor of Paris Las Vegas', 'Tourist Attraction', 'https://live.staticflickr.com/65535/26721413146_438c3a7987.jpg'),
+(3, '-115.1398', '36.1699','Las Vegas', 'NV', 'Venetian Hotel', 'The Venetian Hotel in Las Vegas is located on the Strip, across from Treasure Island.', 'Tourist Attraction', 'https://live.staticflickr.com/65535/49616923966_be21157eab.jpg');
 
 SELECT setval('stops_id_seq', (SELECT MAX(id) from "stops"));
 SELECT setval('trips_id_seq', (SELECT MAX(id) from "trips"));

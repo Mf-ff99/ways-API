@@ -28,7 +28,8 @@ CREATE TABLE stops (
     state TEXT,
     stop_name TEXT,
     description TEXT,
-    category TEXT
+    category TEXT,
+    img TEXT
 );
 
 --  user_id_creator int references users (user_id) ON DELETE CASCADE NOT NULL,

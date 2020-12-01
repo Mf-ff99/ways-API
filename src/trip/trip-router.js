@@ -74,17 +74,10 @@ tripsRouter
     );
   })
   .patch(requireAuth, (req, res, next) => {
-    const {
-      short_description,
-      destination,
-      days,
-      activities,
-      rating,
-    } = req.body;
+    const { short_description, days, activities, rating } = req.body;
 
     const updateTrip = {
       short_description,
-      destination,
       days,
       activities,
       rating,

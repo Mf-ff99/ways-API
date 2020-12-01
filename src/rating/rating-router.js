@@ -1,6 +1,6 @@
 const express = require("express");
 // const bcrypt = require("bcryptjs");
-const TripService = require("./trip-service");
+const TripService = require("../trip/trip-service");
 const { requireAuth } = require("../middleware/jwt-auth");
 
 const ratingRouter = express.Router();

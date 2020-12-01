@@ -7,7 +7,7 @@ const authRouter = require("./auth/auth-router");
 const tripsRouter = require("./trip/trip-router");
 const stopsRouter = require("./stops/stops-router");
 const userRouter = require("./user/user-router");
-const ratingRouter = require("./trip/rating-router");
+const ratingRouter = require("./rating/rating-router");
 const app = express();
 
 const morganOption = NODE_ENV === "production" ? "tiny" : "common";

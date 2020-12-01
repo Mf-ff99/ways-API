@@ -123,7 +123,7 @@ tripsRouter
             updateTrip
           )
             .then((result) => {
-              res.status(204).json(result);
+              res.status(201).json(result);
             })
             .catch(next);
         } else {

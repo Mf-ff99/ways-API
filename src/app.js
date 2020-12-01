@@ -7,6 +7,7 @@ const authRouter = require("./auth/auth-router");
 const tripsRouter = require("./trip/trip-router");
 const stopsRouter = require("./stops/stops-router");
 const userRouter = require("./user/user-router");
+const ratingRouter = require("./trip/rating-router");
 const app = express();
 
 const morganOption = NODE_ENV === "production" ? "tiny" : "common";
@@ -20,6 +21,7 @@ app.use("/api/auth", authRouter);
 app.use("/api/user", userRouter);
 app.use("/api/trips", tripsRouter);
 app.use("/api/stops", stopsRouter);
+app.use("/api/rating", ratingRouter);
 
 app.use(function errorHandler(error, req, res, next) {
   let response;

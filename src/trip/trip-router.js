@@ -19,7 +19,16 @@ tripsRouter
   })
   .post(requireAuth, (req, res, next) => {
     const db = req.app.get("db");
-    const { short_description, destination, days, activities, img } = req.body;
+    const {
+      short_description,
+      destination,
+      days,
+      activities,
+      img,
+      long,
+      lat,
+      rating,
+    } = req.body;
 
     const newTrip = {
       short_description,
@@ -27,6 +36,10 @@ tripsRouter
       days,
       activities,
       img,
+      // long,
+      // lat,
+      // rating,
+      // date_added,
     };
 
     newTrip.user_id = req.user.id;
@@ -74,13 +87,25 @@ tripsRouter
     );
   })
   .patch(requireAuth, (req, res, next) => {
-    const { short_description, days, activities, rating } = req.body;
+    const {
+      short_description,
+      destination,
+      days,
+      activities,
+      img,
+      // long,
+      // lat,
+      // rating,
+    } = req.body;
 
     const updateTrip = {
       short_description,
       days,
       activities,
-      rating,
+      img,
+      // long,
+      // lat,
+      // rating,
     };
 
     const valuesToUpdate = Object.values(updateTrip).filter(Boolean).length;
@@ -98,7 +123,7 @@ tripsRouter
             updateTrip
           )
             .then((result) => {
-              res.status(201).json(result);
+              res.status(204).json(result);
             })
             .catch(next);
         } else {

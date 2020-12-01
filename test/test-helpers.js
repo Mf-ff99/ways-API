@@ -124,22 +124,30 @@ function makeUserArray() {
 
 function makeTripsAndStops(user) {
     const trips = [
-        {
+        {  
             id: 1,
+            date_added: '2020-11-30T16:39:14.898Z',
             destination: 'someplace to go',
             short_description: 'words about what you did there',
             activities: 'restaurant',
+            long: -81.5639,
+            lat: 28.3852,
             days: 3,
+            img: 'picture',
             rating: 3,
             user_id: user.id,
         },
 
         {
             id: 2,
+            date_added: '2020-11-30T16:39:14.898Z',
             destination: 'someplace else to go',
             short_description: 'words about what you did else there',
             activities: 'sight-seeing',
+            long: -81.5639,
+            lat: 28.3852,
             days: 3,
+            img: 'picture',
             rating: 3,
             user_id: user.id,
         },

@@ -4,7 +4,7 @@ const supertest = require('supertest')
 const { expect } = require('chai')
 const { TEST_DATABASE_URL } = require('../src/config')
 
-describe.only('Trips Endpoints', function () {
+describe('Trips Endpoints', function () {
     let db
 
     const testUsers = helpers.makeUserArray()
@@ -32,7 +32,7 @@ describe.only('Trips Endpoints', function () {
         })
 
         context(`Given there are trips in the database`, () => {
-            beforeEach('insert users and trips', () => helpers.seedTrips(db, testUsers, testTrips, testStops))
+            beforeEach('insert users and trips', () => helpers.seedTripsAndStops(db, testUsers, testTrips, testStops))
             
 
             it('responds with 200 and all trips', () => {
@@ -82,9 +82,9 @@ describe.only('Trips Endpoints', function () {
     })
 
     describe('PATCH /api/trips/:id', () => {
-        beforeEach('insert users and trips', () => helpers.seedTrips(db, testUsers, testTrips, testStops))
+        beforeEach('insert users and trips', () => helpers.seedTripsAndStops(db, testUsers, testTrips, testStops))
         
-        it('responds with 204 and updates the trip', () => {
+        it('responds with 201 and updates the trip', () => {
             const idToUpdate = 2
             
             const updateTrip = {
@@ -108,7 +108,7 @@ describe.only('Trips Endpoints', function () {
     describe('DELETE /api/trips/:id', () => {
         context('Given there are trips in the database', () => {
 
-            beforeEach('insert users and trips', () => helpers.seedTrips(db, testUsers, testTrips, testStops))
+            beforeEach('insert users and trips', () => helpers.seedTripsAndStops(db, testUsers, testTrips, testStops))
 
             it('removes the trip by ID', () => {
                 const idToRemove = 2

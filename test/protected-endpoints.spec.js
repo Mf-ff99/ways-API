@@ -21,7 +21,7 @@ describe('Protected Endpoints', function () {
     afterEach('cleanup', () => helpers.cleanTables(db))
 
     beforeEach('insert users, trips and stops', () => {
-        return helpers.seedTrips(
+        return helpers.seedTripsAndStops(
             db,
             testUsers,
             testTrips,

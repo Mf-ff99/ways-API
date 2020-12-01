@@ -41,6 +41,7 @@ function cleanTables(db) {
         trx.raw(
             `TRUNCATE
                 "stops",
+                "ratings",
                 "trips",
                 "ways_users"`
         )
@@ -50,6 +51,7 @@ function cleanTables(db) {
                 trx.raw(`ALTER SEQUENCE trips_id_seq minvalue 0 START WITH 1`),
                 trx.raw(`ALTER SEQUENCE ways_users_id_seq minvalue 0 START WITH 1`),
                 trx.raw(`SELECT setval('stops_id_seq', 0)`),
+                trx.raw(`SELECT setval('ratings_id_seq', 0)`),
                 trx.raw(`SELECT setval('trips_id_seq', 0)`),
                 trx.raw(`SELECT setval('ways_users_id_seq', 0)`),
                 
@@ -241,7 +243,7 @@ function seedUsers(db, ways_users) {
     })
 }
 
-async function seedTrips(db, users, trips, stops) {
+async function seedTripsAndStops(db, users, trips, stops) {
     await seedUsers(db, users)
 
     await db.transaction(async trx => {
@@ -273,5 +275,5 @@ module.exports = {
     makeAuthHeader,
     cleanTables,
     seedUsers,
-    seedTrips,
+    seedTripsAndStops,
 }

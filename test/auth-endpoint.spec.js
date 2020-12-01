@@ -16,7 +16,7 @@ describe('Auth Endpoints', function () {
 
     after('Disconnect from db', () => db.destroy())
 
-    before('Cleanup table', () => helpers.cleanTables(db))
+    before('cleanup table', () => helpers.cleanTables(db))
 
     afterEach('cleanup', () => helpers.cleanTables(db))
 

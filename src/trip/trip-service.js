@@ -1,11 +1,17 @@
 // Service Objects:
 
 const xss = require("xss");
-
+//select trip_id, sum(rating)
+// from ratings r
+// group by trip_id
 const TripService = {
   getTrips(db) {
-    return db("trips")
-      .select("*")
+    return db("ratings")
+      .select("ratings.rating")
+      .sum('ratings.rating')
+      .fullOuterJoin('trips', 'trips.id', '=', 'ratings.trip_id')
+      .select('trips.short_description', 'trips.id', 'trips.destination', 'trips.activities', 'trips.img', 'trips.days', 'trips.date_added')
+      .groupBy('ratings.rating', 'trips.short_description', 'trips.id', 'trips.destination', 'trips.activities', 'trips.img', 'trips.days',  'trips.date_added')
       .then((res) => {
         return res;
       });

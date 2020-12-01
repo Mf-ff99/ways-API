@@ -14,8 +14,6 @@ describe('Protected Endpoints', function () {
         app.set('db', db)
     })
 
-    after('disconnect from db', () => db.destroy())
-
     before('cleanup', () => helpers.cleanTables(db))
   
     afterEach('cleanup', () => helpers.cleanTables(db))
@@ -28,6 +26,8 @@ describe('Protected Endpoints', function () {
             testStops,
         )
     })
+
+    after('disconnect from db', () => db.destroy())
 
     const protectedEndpoints = [
         {

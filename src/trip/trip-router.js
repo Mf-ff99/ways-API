@@ -54,7 +54,6 @@ tripsRouter
   .route("/:id")
   .all((req, res, next) => {
     TripService.getTripsById(req.app.get("db"), parseInt(req.params.id))
-
       .then((trip) => {
         if (!trip) {
           return res.status(404).json({
@@ -67,6 +66,7 @@ tripsRouter
       .catch(next);
   })
   .get((req, res, next) => {
+    console.log(req.trip);
     res.json(req.trip);
   })
   .delete(requireAuth, (req, res, next) => {

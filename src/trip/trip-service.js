@@ -8,24 +8,43 @@ const TripService = {
   getTrips(db) {
     return db("ratings")
       .select("ratings.rating")
-      .sum('ratings.rating AS rating')
-      .fullOuterJoin('trips', 'trips.id', '=', 'ratings.trip_id')
-      .select('trips.short_description', 'trips.id', 'trips.destination', 'trips.activities', 'trips.img', 'trips.days', 'trips.date_added', 'trips.user_id')
-      .groupBy('ratings.rating','trips.short_description', 'trips.id', 'trips.destination', 'trips.activities', 'trips.img', 'trips.days', 'trips.date_added', 'trips.user_id')
+      .sum("ratings.rating AS rating")
+      .fullOuterJoin("trips", "trips.id", "=", "ratings.trip_id")
+      .select(
+        "trips.short_description",
+        "trips.id",
+        "trips.destination",
+        "trips.activities",
+        "trips.img",
+        "trips.days",
+        "trips.date_added",
+        "trips.user_id"
+      )
+      .groupBy(
+        "ratings.rating",
+        "trips.short_description",
+        "trips.id",
+        "trips.destination",
+        "trips.activities",
+        "trips.img",
+        "trips.days",
+        "trips.date_added",
+        "trips.user_id"
+      )
       .then((res) => {
         return res;
       });
   },
 
   insertRating(db, rating) {
-    return db.insert(rating).into("ratings").returning("*")
+    return db.insert(rating).into("ratings").returning("*");
   },
 
   checkForDuplicateRating(db, userInfo) {
-    return db('ratings')
-    .select('ratings.user_id', 'ratings.trip_id')
-    .where('ratings.trip_id', userInfo.id)
-    .returning('*')
+    return db("ratings")
+      .select("ratings.user_id", "ratings.trip_id")
+      .where("ratings.trip_id", userInfo.id)
+      .returning("*");
   },
 
   insertTrip(db, newTrip) {
@@ -48,14 +67,37 @@ const TripService = {
     // return db("trips").where("id", id);
     return db("ratings")
       .select("ratings.rating")
-      .sum('ratings.rating AS rating')
-      .fullOuterJoin('trips', 'trips.id', '=', 'ratings.trip_id')
-      .select('trips.short_description', 'trips.id', 'trips.destination', 'trips.activities', 'trips.img', 'trips.days', 'trips.date_added', 'trips.user_id')
+      .sum("ratings.rating AS rating")
+      .fullOuterJoin("trips", "trips.id", "=", "ratings.trip_id")
+      .select(
+        "trips.short_description",
+        "trips.id",
+        "trips.destination",
+        "trips.activities",
+        "trips.img",
+        "trips.days",
+        "trips.date_added",
+        "trips.user_id",
+        "trips.lat",
+        "trips.long"
+      )
       .where("trips.id", id)
-      .groupBy('ratings.rating', 'trips.short_description', 'trips.id', 'trips.destination', 'trips.activities', 'trips.img', 'trips.days', 'trips.date_added', 'trips.user_id')
-      // .then((res) => {
-      //   return res;
-      // });
+      .groupBy(
+        "ratings.rating",
+        "trips.short_description",
+        "trips.id",
+        "trips.destination",
+        "trips.activities",
+        "trips.img",
+        "trips.days",
+        "trips.date_added",
+        "trips.user_id",
+        "trips.lat",
+        "trips.long"
+      );
+    // .then((res) => {
+    //   return res;
+    // });
   },
 
   // getStopsById(db, id) {
@@ -66,12 +108,31 @@ const TripService = {
     // return db("trips").where("user_id", user_id);
     return db("ratings")
       .select("ratings.rating")
-      .sum('ratings.rating AS rating')
-      .fullOuterJoin('trips', 'trips.id', '=', 'ratings.trip_id')
-      .select('trips.short_description', 'trips.id', 'trips.destination', 'trips.activities', 'trips.img', 'trips.days', 'trips.date_added', 'trips.user_id')
+      .sum("ratings.rating AS rating")
+      .fullOuterJoin("trips", "trips.id", "=", "ratings.trip_id")
+      .select(
+        "trips.short_description",
+        "trips.id",
+        "trips.destination",
+        "trips.activities",
+        "trips.img",
+        "trips.days",
+        "trips.date_added",
+        "trips.user_id"
+      )
       .where("trips.user_id", user_id)
-      .groupBy('ratings.rating', 'trips.short_description', 'trips.id', 'trips.destination', 'trips.activities', 'trips.img', 'trips.days', 'trips.date_added', 'trips.user_id')
-      // .then((res) => {
+      .groupBy(
+        "ratings.rating",
+        "trips.short_description",
+        "trips.id",
+        "trips.destination",
+        "trips.activities",
+        "trips.img",
+        "trips.days",
+        "trips.date_added",
+        "trips.user_id"
+      );
+    // .then((res) => {
   },
 
   deleteTrip(db, id) {

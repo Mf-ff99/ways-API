@@ -27,7 +27,6 @@ tripsRouter
       img,
       long,
       lat,
-      rating,
     } = req.body;
 
     const newTrip = {
@@ -36,10 +35,8 @@ tripsRouter
       days,
       activities,
       img,
-      // long,
-      // lat,
-      // rating,
-      // date_added,
+      long,
+      lat,
     };
 
     newTrip.user_id = req.user.id;

@@ -2,14 +2,14 @@ const app = require('../src/app')
 const helpers = require('./test-helpers')
 const supertest = require('supertest')
 const { expect } = require('chai')
-const { TEST_DATABASE_URL } = require('../src/config')
 
-describe.only('Trips Endpoints', function () {
+describe('Trips Endpoints', function () {
     let db
 
     const testUsers = helpers.makeUserArray()
     const [testUser] = testUsers
     const [testTrips, testStops] = helpers.makeTripsAndStops(testUser)
+    const testRating = helpers.makeRatingsArray()
 
     before('make knex instance', () => {
         db = helpers.makeKnexInstance()
@@ -22,9 +22,9 @@ describe.only('Trips Endpoints', function () {
   
     afterEach('cleanup', () => helpers.cleanTables(db))
 
-    describe.only('GET /api/trips', () => {
+    describe('GET /api/trips', () => {
         context(`Given no trips`, () => {
-            it(`responds with 200 and an empty list`, () => {
+            it(`responds with 200 and an empty array`, () => {
                 return supertest(app)
                 .get('/api/trips')
                 .expect(200, [])
@@ -32,20 +32,23 @@ describe.only('Trips Endpoints', function () {
         })
 
         context(`Given there are trips in the database`, () => {
-            beforeEach('insert users and trips', () => helpers.seedTripsAndStops(db, testUsers, testTrips, testStops))
-            
+            // beforeEach('insert users', () => helpers.seedUsers(db, testUsers,))
+            beforeEach('insert users and trips', () => helpers.seedTripsAndStopsAndRatings(db, testUsers, testTrips, testStops, testRating))
+            const altTestTrips = testTrips.map(trip => ({
+                ...trip, rating: trip.rating.toString()
+            }))
 
             it('responds with 200 and all trips', () => {
                 return supertest(app)
                 .get('/api/trips')
-                .expect(200, testTrips)
+                .expect(200, altTestTrips)
             })
         })
     })
 
     describe('POST /api/trips', () => {
         beforeEach('insert users', () => helpers.seedUsers(db, testUsers,))
-            
+         
             it(`Creates a trip, responds with 201 and new trip`, () => {
                 const newTrip = {
                     "user_id": testUser.id,
@@ -70,7 +73,6 @@ describe.only('Trips Endpoints', function () {
                     expect(res.body.destination).to.eql(newTrip.destination)
                     expect(res.body.activities).to.eql(newTrip.activities)
                     expect(res.body.img).to.eql(newTrip.img)
-                    // expect(res.body.rating).to.eql(newTrip.rating)
                     // expect(res.body.long).to.eql(newTrip.long)
                     // expect(res.body.lat).to.eql(newTrip.lat)
                     expect(res.body.days).to.eql(newTrip.days)
@@ -82,7 +84,7 @@ describe.only('Trips Endpoints', function () {
     })
 
     describe('PATCH /api/trips/:id', () => {
-        beforeEach('insert users and trips', () => helpers.seedTripsAndStops(db, testUsers, testTrips, testStops))
+        beforeEach('insert users and trips', () => helpers.seedTripsAndStopsAndRatings(db, testUsers, testTrips, testStops, testRating))
         
         it('responds with 201 and updates the trip', () => {
             const idToUpdate = 2
@@ -93,7 +95,6 @@ describe.only('Trips Endpoints', function () {
                 'activities': 'having fun',
                 'days': 3,
                 'img': 'picture',
-                'rating': 3,
                 'user_id': testUser.id,
             }
 
@@ -101,14 +102,14 @@ describe.only('Trips Endpoints', function () {
             .patch(`/api/trips/${idToUpdate}`)
             .set('Authorization', helpers.makeAuthHeader(testUser))
             .send(updateTrip)
-            .expect(204)
+            .expect(201)
         })
     })
 
-    describe('DELETE /api/trips/:id', () => {
+    describe.skip('DELETE /api/trips/:id', () => {
         context('Given there are trips in the database', () => {
 
-            beforeEach('insert users and trips', () => helpers.seedTripsAndStops(db, testUsers, testTrips, testStops))
+            beforeEach('insert users and trips', () => helpers.seedTripsAndStopsAndRatings(db, testUsers, testTrips, testStops, testRating))
 
             it('removes the trip by ID', () => {
                 const idToRemove = 2

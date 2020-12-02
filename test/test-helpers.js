@@ -62,6 +62,21 @@ function makeUserArray() {
     ]
 }
 
+function makeRatingsArray() {
+    return [
+        {
+            user_id: 1,
+            trip_id: 1,
+            rating: 1,
+        },
+        {
+            user_id: 1,
+            trip_id: 2,
+            rating: 1,
+        }
+    ]
+}
+
 function makeTripsAndStops(user) {
     const trips = [
         {  
@@ -70,23 +85,18 @@ function makeTripsAndStops(user) {
             destination: 'someplace to go',
             short_description: 'words about what you did there',
             activities: 'restaurant',
-            long: -81.5636,
-            lat: 28.3850,
-            rating: null,
+            rating: 1,
             days: 2,
             img: 'picture1',
             user_id: user.id,
         },
-
         {
             id: 2,
             date_added: '2020-11-30T16:39:14.898Z',
             destination: 'someplace else to go',
             short_description: 'words about what you did else there',
-            activities: 'sight-seeing',
-            long: -81.5639,
-            lat: 28.3852,
-            rating: null,
+            activities: 'sight-seeing',    
+            rating: 1,
             days: 3,
             img: 'picture',
             user_id: user.id,
@@ -96,37 +106,40 @@ function makeTripsAndStops(user) {
     const stops = [
         {
             id: 1,
-            longitude: '-112.1129',
-            latitude: '36.1069',
+            longitude: -112.1129,
+            latitude: 36.1069,
             city: 'Flagstaff',
             state: 'AZ',
             stop_name: 'Grand Canyon',
             description: 'I great big, beautiful hole in the ground',
             category: 'tourist_attraction',
+            img: 'some picture',
             trip_id: 1
         },
 
         {
             id: 2,
-            longitude: '-81.5639',
-            latitude: '28.3852',
+            longitude: -81.5639,
+            latitude: 28.3852,
             city: 'Orlando',
             state: 'FL',
             stop_name: 'Disneyworld',
             description: 'The second home of Mickey Mouse',
             category: 'tourist_attraction',
+            img: 'some picture',
             trip_id: 2
         },
 
         {
             id: 3,
-            longitude: '-81.5639',
-            latitude: '28.3852',
+            longitude: -81.5639,
+            latitude: 28.3852,
             city: 'Orlando',
             state: 'FL',
             stop_name: 'Universal Studios',
             description: 'Great rides and great place',
             category: 'tourist_attraction',
+            img: 'some picture',
             trip_id: 2
         },
     ]
@@ -151,12 +164,13 @@ function seedUsers(db, ways_users) {
 
 
 
-async function seedTripsAndStops(db, users, trips, stops) {
+async function seedTripsAndStopsAndRatings(db, users, trips, stops, ratings) {
     await seedUsers(db, users)
 
     await db.transaction(async trx => {
         await trx.into('trips').insert(trips)
         await trx.into('stops').insert(stops)
+        await trx.into('ratings').insert(ratings)
 
         const tripsStop = stops.find(
             s => s.trips_id === trips[0].id
@@ -181,7 +195,8 @@ module.exports = {
     makeUserArray,
     makeTripsAndStops,
     makeAuthHeader,
+    makeRatingsArray,
     cleanTables,
     seedUsers,
-    seedTripsAndStops,
+    seedTripsAndStopsAndRatings,
 }

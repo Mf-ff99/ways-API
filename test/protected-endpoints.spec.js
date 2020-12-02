@@ -8,6 +8,7 @@ describe('Protected Endpoints', function () {
     const testUsers = helpers.makeUserArray()
     const [testUser] = testUsers
     const [testTrips, testStops] = helpers.makeTripsAndStops(testUser)
+    const testRating = helpers.makeRatingsArray()
 
     before('make knex instance', () => {
         db = helpers.makeKnexInstance()
@@ -19,11 +20,12 @@ describe('Protected Endpoints', function () {
     afterEach('cleanup', () => helpers.cleanTables(db))
 
     beforeEach('insert users, trips and stops', () => {
-        return helpers.seedTripsAndStops(
+        return helpers.seedTripsAndStopsAndRatings(
             db,
             testUsers,
             testTrips,
             testStops,
+            testRating,
         )
     })
 
@@ -36,17 +38,11 @@ describe('Protected Endpoints', function () {
             method: supertest(app).post,
         },
 
-        // {
-        //     title: 'PATCH /api/trips',
-        //     path: '/api/trips',
-        //     method: supertest(app).patch,
-        // },
-
-        // {
-        //     title: 'POST /api/trips/stops',
-        //     path: '/api/trips/stops',
-        //     method: supertest(app).post,
-        // },
+        {
+            title: 'POST /api/stops',
+            path: '/api/stops',
+            method: supertest(app).post,
+        },
     ]
 
     protectedEndpoints.forEach(endpoint => {

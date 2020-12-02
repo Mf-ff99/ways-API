@@ -36,32 +36,20 @@ const TripService = {
       });
   },
 
-  insertRating(db, rating) {
-    return db.insert(rating).into("ratings").returning("*");
-  },
+  // insertRating(db, rating) {
+  //   return db.insert(rating).into("ratings").returning("*");
+  // },
 
-  checkForDuplicateRating(db, userInfo) {
-    return db("ratings")
-      .select("ratings.user_id", "ratings.trip_id")
-      .where("ratings.trip_id", userInfo.id)
-      .returning("*");
-  },
+  // checkForDuplicateRating(db, userInfo) {
+  //   return db("ratings")
+  //     .select("ratings.user_id", "ratings.trip_id")
+  //     .where("ratings.trip_id", userInfo.id)
+  //     .returning("*");
+  // },
 
   insertTrip(db, newTrip) {
     return db.insert(newTrip).into("trips").returning("*");
   },
-
-  // getStops(db) {
-  //   return db("stops")
-  //     .select("*")
-  //     .then((res) => {
-  //       return res;
-  //     });
-  // },
-
-  // insertStop(db, newStop) {
-  //   return db.insert(newStop).into("stops");
-  // },
 
   getTripsById(db, id) {
     // return db("trips").where("id", id);
@@ -100,10 +88,6 @@ const TripService = {
     // });
   },
 
-  // getStopsById(db, id) {
-  //   return db("stops").where("trip_id", id);
-  // },
-
   getTripsForUser(db, user_id) {
     // return db("trips").where("user_id", user_id);
     return db("ratings")
@@ -139,17 +123,9 @@ const TripService = {
     return db("trips").where({ id }).delete();
   },
 
-  // deleteStop(db, id) {
-  //   return db("stops").where({ id }).delete()
-  // },
-
   updateTrip(db, id, newTripFields) {
     return db("trips").where({ id }).update(newTripFields).returning("*");
   },
-
-  // updateStop(db, id, newStopFields) {
-  //   return db("stops").where({ id }).update(newStopFields)
-  // },
 
   serializeTrip(trip) {
     return {
@@ -164,18 +140,6 @@ const TripService = {
     };
   },
 
-  // serializeStop(stop) {
-  //   return {
-  //     trip_id: stop.trip_id,
-  //     longitude: stop.longitude,
-  //     latitude: stop.latitude,
-  //     city: xss(stop.city),
-  //     state: xss(stop.state),
-  //     stop_name: xss(stop.stop_name),
-  //     description: xss(stop.description),
-  //     category: xss(stop.category),
-  //   };
-  // },
   verifyTripCreatorAuth(db, id) {
     return db("trips").select("user_id").where({ id }).first();
   },

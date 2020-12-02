@@ -55,6 +55,7 @@ stopsRouter.route("/").post(requireAuth, (req, res, next) => {
     category,
     img,
   };
+  
 
   StopsService.getTripCreatorByTripId(db, trip_id)
     .then((verifiedID) => {

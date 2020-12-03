@@ -90,9 +90,9 @@ tripsRouter
       days,
       activities,
       img,
-      // long,
-      // lat,
-      // rating,
+      long,
+      lat,
+      rating,
     } = req.body;
 
     const updateTrip = {
@@ -100,9 +100,9 @@ tripsRouter
       days,
       activities,
       img,
-      // long,
-      // lat,
-      // rating,
+      long,
+      lat,
+      rating,
     };
 
     const valuesToUpdate = Object.values(updateTrip).filter(Boolean).length;

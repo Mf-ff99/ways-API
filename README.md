@@ -1,15 +1,14 @@
 # Ways App
  This app helps you plan the perfect trip! You can also see other trips to get ideas for your trip. 
 
- ### Demo Accounts:
+ ## END POINTS
+- Auth
+    -
+- Users
+- Trips
+- Stops
+- Ratings
 
-- username: John Rambo
-- password: password
-
-OR
-
-- username: Natasha Romanova
-- password: password
 
 ## Tech Stack
 

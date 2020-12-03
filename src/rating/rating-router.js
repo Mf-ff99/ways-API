@@ -28,7 +28,6 @@ ratingRouter.route("/").post(requireAuth, (req, res, next) => {
   const newRating = { trip_id, user_id, rating };
   RatingService.insertRating(db, newRating)
     .then((rating) => {
-      // console.log(res)
       res.status(201).json(rating);
     })
     .catch(next);

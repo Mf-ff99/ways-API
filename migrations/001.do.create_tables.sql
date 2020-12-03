@@ -33,8 +33,8 @@ CREATE TABLE stops (
 );
 
 CREATE TABLE ratings(
-  trip_id INTEGER references trips(id),
-  user_id INTEGER references ways_users(id),
+  trip_id INTEGER references trips(id) ON DELETE CASCADE NOT NULL,
+  user_id INTEGER references ways_users(id) ON DELETE CASCADE NOT NULL,
   rating INTEGER NOT NULL,
   PRIMARY KEY (trip_id, user_id)
 );	

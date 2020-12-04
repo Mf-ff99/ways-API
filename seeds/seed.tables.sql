@@ -31,9 +31,9 @@ VALUES
 (2, '-73.985130', '40.758896', 'New York City', 'NY', 'Times Square', 'Lots of cool shit to see here', 'tourist_attraction', 'https://live.staticflickr.com/1580/24036829791_1d15b38993.jpg'),
 (2, '-73.966562', '40.781317', 'New York City', 'NY', 'Central Park', 'This is a big ass park. Go here for your daily does of greenery.', 'Tourist Attraction', 'https://live.staticflickr.com/7398/28132606265_080649d857.jpg'),
 (3, '-115.1398', '36.1699','Las Vegas', 'NV', 'Eiffel Tower', 'Elevated French haunt offering Strip views from the 11th floor of Paris Las Vegas', 'Tourist Attraction', 'https://live.staticflickr.com/65535/26721413146_438c3a7987.jpg'),
-(3, '-115.1398', '36.1699','Las Vegas', 'NV', 'Venetian Hotel', 'The Venetian Hotel in Las Vegas is located on the Strip, across from Treasure Island.', 'Tourist Attraction', 'https://live.staticflickr.com/65535/49616923966_be21157eab.jpg');
-(4, '-79.3881603', '43.6424036','Toronto', 'Canada', 'Ripley''s Aquarium of Canada', 'Explore the Waters of the World at Ripley''s Aquarium of Canada.', 'Aquarium', 'https://live.staticflickr.com/5668/22874562822_d6d809776c.jpg');
-(4, '-79.465879', '43.6465479','Toronto', 'Canada', 'High Park', 'Sprawling park with hiking trails, a zoo, sports fields & a large children''s playground.', 'Park', 'https://live.staticflickr.com/5332/31123187085_1662372980.jpg');
+(3, '-115.1398', '36.1699','Las Vegas', 'NV', 'Venetian Hotel', 'The Venetian Hotel in Las Vegas is located on the Strip, across from Treasure Island.', 'Tourist Attraction', 'https://live.staticflickr.com/65535/49616923966_be21157eab.jpg'),
+(4, '-79.3881603', '43.6424036','Toronto', 'Canada', 'Ripley''s Aquarium of Canada', 'Explore the Waters of the World at Ripley''s Aquarium of Canada.', 'Aquarium', 'https://live.staticflickr.com/5668/22874562822_d6d809776c.jpg'),
+(4, '-79.465879', '43.6465479','Toronto', 'Canada', 'High Park', 'Sprawling park with hiking trails, a zoo, sports fields & a large children''s playground.', 'Park', 'https://live.staticflickr.com/5332/31123187085_1662372980.jpg'),
 (5, '-115.1398', '36.1699','Chicago', 'IL', 'Magnificent Mile', 'Shopping center in an upscale section of Chicago''s Michigan Avenue, running from the Chicago River to Oak Street .', 'Shopping Mall', 'https://live.staticflickr.com/5675/30309433946_585157ed34.jpg');
 
 

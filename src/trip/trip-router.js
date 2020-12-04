@@ -113,7 +113,7 @@ tripsRouter
             updateTrip
           )
             .then((result) => {
-              res.status(201).json(TripService.serializeTrip(result));
+              res.status(201).json(result.map(TripService.serializeTrip));
             })
             .catch(next);
         } else {

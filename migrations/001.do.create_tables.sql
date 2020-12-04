@@ -29,7 +29,7 @@ CREATE TABLE stops (
     stop_name TEXT NOT NULL,
     description TEXT NOT NULL,
     category TEXT NOT NULL,
-    img TEXT NOT NULL
+    img TEXT        
 );
 
 CREATE TABLE ratings(

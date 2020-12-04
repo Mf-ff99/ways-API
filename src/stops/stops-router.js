@@ -47,7 +47,6 @@ stopsRouter.route("/").post(requireAuth, (req, res, next) => {
     stop_name,
     description,
     category,
-    img,
   };
 
   for (const [key, value] of Object.entries(newStop))
@@ -55,6 +54,8 @@ stopsRouter.route("/").post(requireAuth, (req, res, next) => {
       return res.status(400).json({
         error: `Missing required '${key}'`,
       });
+
+  newStop.img = img;
 
   StopsService.getTripCreatorByTripId(db, trip_id)
     .then((verifiedID) => {

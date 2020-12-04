@@ -69,7 +69,6 @@ const TripService = {
         "trips.lat",
         "trips.long"
       );
-  
   },
 
   getTripsForUser(db, user_id) {
@@ -119,6 +118,8 @@ const TripService = {
       activities: trip.activities,
       user_id: trip.user_id,
       img: trip.img,
+      long: trip.long,
+      lat: trip.long,
     };
   },
 

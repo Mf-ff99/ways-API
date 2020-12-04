@@ -11,6 +11,10 @@ describe('Trips Endpoints', function () {
     const [testTrips, testStops] = helpers.makeTripsAndStops(testUser)
     const testRating = helpers.makeRatingsArray()
 
+    const altTestTrips = testTrips.map(trip => ({
+        ...trip, rating: trip.rating.toString()
+    }))
+
     before('make knex instance', () => {
         db = helpers.makeKnexInstance()
         app.set('db', db)
@@ -32,11 +36,7 @@ describe('Trips Endpoints', function () {
         })
 
         context(`Given there are trips in the database`, () => {
-            // beforeEach('insert users', () => helpers.seedUsers(db, testUsers,))
             beforeEach('insert users and trips', () => helpers.seedTripsAndStopsAndRatings(db, testUsers, testTrips, testStops, testRating))
-            const altTestTrips = testTrips.map(trip => ({
-                ...trip, rating: trip.rating.toString()
-            }))
 
             it('responds with 200 and all trips', () => {
                 return supertest(app)
@@ -57,7 +57,7 @@ describe('Trips Endpoints', function () {
                     "short_description": "New York, baby!",
                     "long": -73.98513,
                     "lat": 40.758896,
-                    "rating": 2,
+                    "rating": 1,
                     "destination": "New York, NY",
                     "activities": "Shopping, Sight-Seeing",
                     "img": "city",
@@ -73,8 +73,6 @@ describe('Trips Endpoints', function () {
                     expect(res.body.destination).to.eql(newTrip.destination)
                     expect(res.body.activities).to.eql(newTrip.activities)
                     expect(res.body.img).to.eql(newTrip.img)
-                    // expect(res.body.long).to.eql(newTrip.long)
-                    // expect(res.body.lat).to.eql(newTrip.lat)
                     expect(res.body.days).to.eql(newTrip.days)
                     expect(res.body).to.have.property('id')
                     
@@ -106,25 +104,18 @@ describe('Trips Endpoints', function () {
         })
     })
 
-    describe.skip('DELETE /api/trips/:id', () => {
+    describe('DELETE /api/trips/:id', () => {
         context('Given there are trips in the database', () => {
 
-            beforeEach('insert users and trips', () => helpers.seedTripsAndStopsAndRatings(db, testUsers, testTrips, testStops, testRating))
+            beforeEach('insert users and trips', () => helpers.seedTripsAndStopsAndRatings(db, testUsers, testTrips, testStops))
 
             it('removes the trip by ID', () => {
                 const idToRemove = 2
                 const expectedTrips = testTrips.filter(trip => trip.id !== idToRemove)
-
                 return supertest(app)
                 .delete(`/api/trips/${idToRemove}`)
                 .set('Authorization', helpers.makeAuthHeader(testUser))
                 .expect(204)
-                .then(() =>
-                    supertest(app)
-                    .get(`/api/trips`)
-                    .expect(expectedTrips)
-                )
-
             })
         })
     })

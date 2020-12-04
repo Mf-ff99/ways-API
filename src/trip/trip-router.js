@@ -1,5 +1,4 @@
 const express = require("express");
-// const bcrypt = require("bcryptjs");
 const TripService = require("./trip-service");
 const { requireAuth } = require("../middleware/jwt-auth");
 const { Console } = require("winston/lib/winston/transports");
@@ -38,6 +37,14 @@ tripsRouter
       long,
       lat,
     };
+
+    for (const [key, value] of Object.entries(newTrip)) {
+      if (value == null) {
+        return res.status(400).json({
+          error: { message: `Missing '${key}' in request body` },
+        });
+      }
+    }
 
     newTrip.user_id = req.user.id;
     TripService.insertTrip(db, newTrip)
@@ -106,7 +113,7 @@ tripsRouter
             updateTrip
           )
             .then((result) => {
-              res.status(201).json(result);
+              res.status(201).json(TripService.serializeTrip(result));
             })
             .catch(next);
         } else {

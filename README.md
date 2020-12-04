@@ -1,26 +1,94 @@
-# Express Boilerplate!
+# Ways App
+ This app helps you plan the perfect trip! You can also see other trips to get ideas for your trip. 
 
-This is a boilerplate project used for starting new projects!
+ ## About the Devs
 
-## Set up
+-[Devon Reihl](https://github.com/DevonReihl) -[Mark Force](https://github.com/Mf-ff99) -[Richard Scott](https://github.com/Richardscripts) -[Will Zeiher](https://github.com/wzeiher3) 
 
-Complete the following steps to start a new project (NEW-PROJECT-NAME):
+ ## END POINTS
+- Auth
+    - `/api/auth/token`
+        - POST
+- Users
+    - `/api/user`
+        - POST
+- Trips
+    - `/api/trips`
+        - GET
+        - POST
+    - `/api/trips/:id`
+        - GET
+        - PATCH
+        - DELETE
+- Stops
+    - `/api/stops`
+        - POST 
+    - `/api/stops/:stop_id`
+        - DELETE
+        - PATCH
+    - `/api/stops/:trip_id`
+        - GET by trip
+    - `/allStops/:user_id`
+        - GET by the user
 
-1. Clone this repository to your local machine `git clone BOILERPLATE-URL NEW-PROJECTS-NAME`
-2. `cd` into the cloned repository
-3. Make a fresh start of the git history for this project with `rm -rf .git && git init`
-4. Install the node dependencies `npm install`
-5. Move the example Environment file to `.env` that will be ignored by git and read by the express server `mv example.env .env`
-6. Edit the contents of the `package.json` to use NEW-PROJECT-NAME instead of `"name": "express-boilerplate",`
+- Ratings
+    - `/api/rating`
+        - POST   
+    - `/api/rating/check:id`
+        - GET
 
-## Scripts
 
-Start the application `npm start`
+## Tech Stack
 
-Start nodemon for the application `npm run dev`
+### Development
 
-Run the tests `npm test`
+- Node
+  - Authentication JWT
+  - RESTFUL API
+- Postgresql
+  - postgrator
 
-## Deploying
+### Testing
 
-When your new project is ready for deployment, add a new Heroku application with `heroku create`. This will make a new git remote called "heroku" and you can then `npm run deploy` which will push to this remote's master branch.
+- SuperTest (integration tests)
+- Mocha and Chai (unit tests)
+
+### Production
+
+- Deployed via Heroku
+https://ways-database-api.herokuapp.com/
+
+### Client
+- Client repo can be found
+https://github.com/wzeiher3/trip-client.git
+
+- Deployed via Vercel
+https://ways-client.vercel.app/
+
+
+## Available Scripts
+
+In the project directory, you can run:
+
+### `npm start`
+
+Runs the app in the development mode.<br />
+Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+
+The page will reload if you make edits.<br />
+You will also see any lint errors in the console.
+
+### `npm test`
+
+Launches the test runner in the interactive watch mode.<br />
+See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+
+### `npm run build`
+
+Builds the app for production to the `build` folder.<br />
+It correctly bundles React in production mode and optimizes the build for the best performance.
+
+The build is minified and the filenames include the hashes.<br />
+Your app is ready to be deployed!
+
+See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.

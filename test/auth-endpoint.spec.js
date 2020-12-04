@@ -87,33 +87,4 @@ describe('Auth Endpoints', function () {
             })
         })
     })
-    
-    // describe(`PATCH /api/auth/token`, () => {
-    //     beforeEach('insert users', () => 
-    //         helpers.seedUsers(
-    //             db,
-    //             testUsers,
-    //         )
-    //     )
-
-    //     it(`responds 200 and JWT auth token using secret`, ()=> {
-           
-    //         const expectedToken = jwt.sign(
-    //             { user_id: testUser.id },
-    //             process.env.JWT_SECRET,
-    //             {
-    //                 subject: testUser.user_name,
-    //                 expiresIn: process.env.JWT_EXPIRY,
-    //                 algorithm: 'HS256',
-    //             },
-                
-    //         )
-    //         return supertest(app)   
-    //         .put('/api/auth/token')
-    //         .set('Authorization', helpers.makeAuthHeader(testUser))
-    //         .expect(200, {
-    //             authToken: expectedToken
-    //         })
-    //     })
-    // })
 })

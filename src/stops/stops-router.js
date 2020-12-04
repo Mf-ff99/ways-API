@@ -1,10 +1,7 @@
 const express = require("express");
-// const bcrypt = require("bcryptjs");
 const StopsService = require("./stops-service");
 const { requireAuth } = require("../middleware/jwt-auth");
 const { Console } = require("winston/lib/winston/transports");
-const TripService = require("../trip/trip-service");
-
 const stopsRouter = express.Router();
 
 stopsRouter.get("/allStops/:user_id", (req, res, next) => {
@@ -12,20 +9,17 @@ stopsRouter.get("/allStops/:user_id", (req, res, next) => {
   const id = req.params.user_id;
   StopsService.getAllStops(db, id)
     .then((stops) => {
-      return res.json(stops);
+      res.json(stops);
     })
     .catch(next);
 });
 
 stopsRouter.get("/:trip_id", (req, res, next) => {
   const db = req.app.get("db");
-  // get id of trip from params
-
   const id = req.params.trip_id;
-
   StopsService.getStopsById(db, id)
     .then((stops) => {
-      return res.json(stops);
+      res.json(stops);
     })
     .catch(next);
 });
@@ -55,14 +49,19 @@ stopsRouter.route("/").post(requireAuth, (req, res, next) => {
     category,
     img,
   };
-  
+
+  for (const [key, value] of Object.entries(newStop))
+    if (!value)
+      return res.status(400).json({
+        error: `Missing required '${key}'`,
+      });
 
   StopsService.getTripCreatorByTripId(db, trip_id)
     .then((verifiedID) => {
       if (verifiedID.user_id === req.user.id) {
         StopsService.insertStop(db, newStop)
           .then(([result]) => {
-            return res.status(201).json(StopsService.serializeStop(result));
+            res.status(201).json(StopsService.serializeStop(result));
           })
           .catch(next);
       } else {
@@ -80,7 +79,7 @@ stopsRouter
     StopsService.getStopsById(req.app.get("db"), parseInt(req.params.stop_id))
       .then((stops) => {
         if (!stops) {
-          return res.status(404).json({
+          res.status(404).json({
             error: { message: `Stop does not exist` },
           });
         } else {

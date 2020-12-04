@@ -5,21 +5,18 @@ const { requireAuth } = require("../middleware/jwt-auth");
 
 const ratingRouter = express.Router();
 
-ratingRouter
-  // check database for duplicate key values
-  .route("/check/:id")
-  .get(requireAuth, (req, res, next) => {
-    const db = req.app.get("db");
-    const { id } = req.params;
-    const user_id = req.user.id;
-    const userInfo = { id, user_id };
+ratingRouter.route("/check/:id").get(requireAuth, (req, res, next) => {
+  const db = req.app.get("db");
+  const { id } = req.params;
+  const user_id = req.user.id;
+  const userInfo = { id, user_id };
 
-    RatingService.checkForDuplicateRating(db, userInfo)
-      .then((info) => {
-        res.json(info);
-      })
-      .catch(next);
-  });
+  RatingService.checkForDuplicateRating(db, userInfo)
+    .then((info) => {
+      res.json(info);
+    })
+    .catch(next);
+});
 
 ratingRouter.route("/").post(requireAuth, (req, res, next) => {
   const db = req.app.get("db");
@@ -28,7 +25,6 @@ ratingRouter.route("/").post(requireAuth, (req, res, next) => {
   const newRating = { trip_id, user_id, rating };
   RatingService.insertRating(db, newRating)
     .then((rating) => {
-      // console.log(res)
       res.status(201).json(rating);
     })
     .catch(next);

@@ -10,26 +10,26 @@ CREATE TABLE trips (
     id SERIAL PRIMARY KEY,
     date_added TIMESTAMPTZ NOT NULL DEFAULT now(),
     short_description TEXT NOT NULL, 
-    long FLOAT,
-    lat FLOAT,
+    long FLOAT NOT NULL,
+    lat FLOAT NOT NULL,
     rating INTEGER DEFAULT NULL,
-    destination TEXT,
-    activities TEXT,
-    img text,
-    days int
+    destination TEXT NOT NULL,
+    activities TEXT NOT NULL,
+    img TEXT NOT NULL,
+    days INT NOT NULL
 );
 
 CREATE TABLE stops (
     id SERIAL PRIMARY KEY,
     trip_id INTEGER REFERENCES trips(id) ON DELETE CASCADE NOT NULL,
-    longitude FLOAT,
-    latitude FLOAT,
-    city TEXT,
-    state TEXT,
-    stop_name TEXT,
-    description TEXT,
-    category TEXT,
-    img TEXT
+    longitude FLOAT NOT NULL,
+    latitude FLOAT NOT NULL,
+    city TEXT NOT NULL,
+    state TEXT NOT NULL,
+    stop_name TEXT NOT NULL,
+    description TEXT NOT NULL,
+    category TEXT NOT NULL,
+    img TEXT NOT NULL
 );
 
 CREATE TABLE ratings(
@@ -38,5 +38,3 @@ CREATE TABLE ratings(
   rating INTEGER NOT NULL,
   PRIMARY KEY (trip_id, user_id)
 );	
-
---  user_id_creator int references users (user_id) ON DELETE CASCADE NOT NULL,

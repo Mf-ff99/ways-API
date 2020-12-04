@@ -3,11 +3,35 @@
 
  ## END POINTS
 - Auth
-    -
+    - `/api/auth/token`
+        - POST
 - Users
+    - `/api/user`
+        - POST
 - Trips
+    - `/api/trips`
+        - GET
+        - POST
+    - `/api/trips/:id`
+        - GET
+        - PATCH
+        - DELETE
 - Stops
+    - `/api/stops`
+        - POST 
+    - `/api/stops/:stop_id`
+        - DELETE
+        - PATCH
+    - `/api/stops/:trip_id`
+        - GET by trip
+    - `/allStops/:user_id`
+        - GET by the user
+
 - Ratings
+    - `/api/rating`
+        - POST   
+    - `/api/rating/check:id`
+        - GET
 
 
 ## Tech Stack
@@ -40,4 +64,4 @@ https://ways-client.vercel.app/
 
 ## About the Devs
 
--[Devon](https://github.com/DevonReihl) -[Mark](https://github.com/Mf-ff99) -[Richard](https://github.com/Richardscripts) -[Will](https://github.com/wzeiher3) 
+-[Devon Reihl](https://github.com/DevonReihl) -[Mark Force](https://github.com/Mf-ff99) -[Richard Scott](https://github.com/Richardscripts) -[Will Zeiher](https://github.com/wzeiher3) 

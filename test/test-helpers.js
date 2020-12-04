@@ -173,10 +173,6 @@ async function seedTripsAndStopsAndRatings(db, users, trips, stops, ratings) {
         await trx.into('stops').insert(stops)
         await trx.into('ratings').insert(ratings)
 
-        // const tripsStop = stops.find(
-        //     s => s.trips_id === trips[0].id
-        // )
-
         await Promise.all([
             trx.raw(
                 `SELECT setval('trips_id_seq', ?)`,

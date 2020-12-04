@@ -36,7 +36,6 @@ describe('Trips Endpoints', function () {
         })
 
         context(`Given there are trips in the database`, () => {
-            // beforeEach('insert users', () => helpers.seedUsers(db, testUsers,))
             beforeEach('insert users and trips', () => helpers.seedTripsAndStopsAndRatings(db, testUsers, testTrips, testStops, testRating))
 
             it('responds with 200 and all trips', () => {
@@ -74,8 +73,6 @@ describe('Trips Endpoints', function () {
                     expect(res.body.destination).to.eql(newTrip.destination)
                     expect(res.body.activities).to.eql(newTrip.activities)
                     expect(res.body.img).to.eql(newTrip.img)
-                    // expect(res.body.long).to.eql(newTrip.long)
-                    // expect(res.body.lat).to.eql(newTrip.lat)
                     expect(res.body.days).to.eql(newTrip.days)
                     expect(res.body).to.have.property('id')
                     

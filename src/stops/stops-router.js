@@ -1,5 +1,4 @@
 const express = require("express");
-// const bcrypt = require("bcryptjs");
 const StopsService = require("./stops-service");
 const { requireAuth } = require("../middleware/jwt-auth");
 const { Console } = require("winston/lib/winston/transports");
@@ -19,7 +18,6 @@ stopsRouter.get("/allStops/:user_id", (req, res, next) => {
 
 stopsRouter.get("/:trip_id", (req, res, next) => {
   const db = req.app.get("db");
-  // get id of trip from params
 
   const id = req.params.trip_id;
 

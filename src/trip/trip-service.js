@@ -1,9 +1,7 @@
 // Service Objects:
 
 const xss = require("xss");
-//select trip_id, sum(rating)
-// from ratings r
-// group by trip_id
+
 const TripService = {
   getTrips(db) {
     return db("ratings")
@@ -36,23 +34,11 @@ const TripService = {
       });
   },
 
-  // insertRating(db, rating) {
-  //   return db.insert(rating).into("ratings").returning("*");
-  // },
-
-  // checkForDuplicateRating(db, userInfo) {
-  //   return db("ratings")
-  //     .select("ratings.user_id", "ratings.trip_id")
-  //     .where("ratings.trip_id", userInfo.id)
-  //     .returning("*");
-  // },
-
   insertTrip(db, newTrip) {
     return db.insert(newTrip).into("trips").returning("*");
   },
 
   getTripsById(db, id) {
-    // return db("trips").where("id", id);
     return db("ratings")
       .select("ratings.rating")
       .sum("ratings.rating AS rating")
@@ -83,13 +69,10 @@ const TripService = {
         "trips.lat",
         "trips.long"
       );
-    // .then((res) => {
-    //   return res;
-    // });
+  
   },
 
   getTripsForUser(db, user_id) {
-    // return db("trips").where("user_id", user_id);
     return db("ratings")
       .select("ratings.rating")
       .sum("ratings.rating AS rating")
@@ -116,7 +99,6 @@ const TripService = {
         "trips.date_added",
         "trips.user_id"
       );
-    // .then((res) => {
   },
 
   deleteTrip(db, id) {

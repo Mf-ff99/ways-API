@@ -1,5 +1,4 @@
 const express = require("express");
-// const bcrypt = require("bcryptjs");
 const RatingService = require("../rating/rating-service");
 const { requireAuth } = require("../middleware/jwt-auth");
 
